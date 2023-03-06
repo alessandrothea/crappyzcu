@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import time
+import os
 import click
 from rich import print
 from rich.table import Table
@@ -7,11 +8,15 @@ from rich.progress import track
 
 from crappyhalclient import CrappyHardwareClient
 
+host = 'np04-zcu-001'
+port = 5556
+# addrtab = 'zcu_top.flat_regmap.json'
+addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_mark3', 'zcu_top.xml')
+
 @click.command()
 def main():
     """Simple frequency measurement"""
-    port = 5556
-    hw = CrappyHardwareClient('np04-zcu-001', port, 'zcu_top.flat_regmap.json')
+    hw = CrappyHardwareClient(host, port, addrtab)
     hw.connect()
     clk_chans = range(4)
 
