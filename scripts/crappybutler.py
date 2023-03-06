@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import click
+import os
 from rich import print
 from rich.table import Table
 from rich.progress import track
@@ -41,7 +42,7 @@ homes = {
 
 host = 'np04-zcu-001'
 port = 5556
-addrtab = 'zcu_top.flat_regmap.json'
+addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_mark3', 'zcu_top.xml')
 
 # N_MGT=2
 # N_SRC=8
