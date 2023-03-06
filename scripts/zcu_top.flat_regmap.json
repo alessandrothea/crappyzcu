@@ -1,0 +1,1382 @@
+{
+    "tx": {
+        "mask": "0xffffffff", 
+        "addr": "0x0"
+    }, 
+    "tx.info": {
+        "mask": "0xffffffff", 
+        "addr": "0x0"
+    }, 
+    "tx.info.magic": {
+        "mask": "0xffffffff", 
+        "addr": "0x0"
+    }, 
+    "tx.info.versions": {
+        "mask": "0xffffffff", 
+        "addr": "0x1"
+    }, 
+    "tx.info.versions.design": {
+        "mask": "0xff000000", 
+        "addr": "0x1"
+    }, 
+    "tx.info.versions.major": {
+        "mask": "0xff0000", 
+        "addr": "0x1"
+    }, 
+    "tx.info.versions.minor": {
+        "mask": "0xff00", 
+        "addr": "0x1"
+    }, 
+    "tx.info.versions.patch": {
+        "mask": "0xff", 
+        "addr": "0x1"
+    }, 
+    "tx.info.generics": {
+        "mask": "0xffffffff", 
+        "addr": "0x2"
+    }, 
+    "tx.info.generics.ref_freq": {
+        "mask": "0xf0000", 
+        "addr": "0x2"
+    }, 
+    "tx.info.generics.n_mgts": {
+        "mask": "0xff00", 
+        "addr": "0x2"
+    }, 
+    "tx.info.generics.n_srcs": {
+        "mask": "0xff", 
+        "addr": "0x2"
+    }, 
+    "tx.mux": {
+        "mask": "0xffffffff", 
+        "addr": "0x40"
+    }, 
+    "tx.mux.csr": {
+        "mask": "0xffffffff", 
+        "addr": "0x40"
+    }, 
+    "tx.mux.csr.ctrl": {
+        "mask": "0xffffffff", 
+        "addr": "0x40"
+    }, 
+    "tx.mux.csr.ctrl.en": {
+        "mask": "0x1", 
+        "addr": "0x40"
+    }, 
+    "tx.mux.csr.ctrl.en_buf": {
+        "mask": "0x2", 
+        "addr": "0x40"
+    }, 
+    "tx.mux.csr.ctrl.sample": {
+        "mask": "0x4", 
+        "addr": "0x40"
+    }, 
+    "tx.mux.csr.ctrl.tx_en": {
+        "mask": "0x8", 
+        "addr": "0x40"
+    }, 
+    "tx.mux.csr.ctrl.sel_buf": {
+        "mask": "0xff00", 
+        "addr": "0x40"
+    }, 
+    "tx.mux.csr.ctrl.sel_mux": {
+        "mask": "0x30000", 
+        "addr": "0x40"
+    }, 
+    "tx.mux.csr.stat": {
+        "mask": "0xffffffff", 
+        "addr": "0x42"
+    }, 
+    "tx.mux.csr.stat.err": {
+        "mask": "0x1", 
+        "addr": "0x42"
+    }, 
+    "tx.mux.csr.stat.eth_rdy": {
+        "mask": "0x2", 
+        "addr": "0x42"
+    }, 
+    "tx.mux.csr.stat.src_rdy": {
+        "mask": "0x4", 
+        "addr": "0x42"
+    }, 
+    "tx.mux.csr.stat.samp_done": {
+        "mask": "0x8", 
+        "addr": "0x42"
+    }, 
+    "tx.mux.csr.samp_dt": {
+        "mask": "0xffffffff", 
+        "addr": "0x43"
+    }, 
+    "tx.mux.mux": {
+        "mask": "0xffffffff", 
+        "addr": "0x44"
+    }, 
+    "tx.mux.mux.ctrl": {
+        "mask": "0xffffffff", 
+        "addr": "0x44"
+    }, 
+    "tx.mux.mux.ctrl.detid": {
+        "mask": "0x3f", 
+        "addr": "0x44"
+    }, 
+    "tx.mux.mux.ctrl.crate": {
+        "mask": "0xffc0", 
+        "addr": "0x44"
+    }, 
+    "tx.mux.mux.ctrl.slot": {
+        "mask": "0xf0000", 
+        "addr": "0x44"
+    }, 
+    "tx.mux.mux.stat": {
+        "mask": "0xffffffff", 
+        "addr": "0x45"
+    }, 
+    "tx.mux.mux.stat.oflow": {
+        "mask": "0x1", 
+        "addr": "0x45"
+    }, 
+    "tx.mux.mux.stat.debug": {
+        "mask": "0xff00", 
+        "addr": "0x45"
+    }, 
+    "tx.mux.buf": {
+        "mask": "0xffffffff", 
+        "addr": "0x50"
+    }, 
+    "tx.mux.buf.stat": {
+        "mask": "0xffffffff", 
+        "addr": "0x50"
+    }, 
+    "tx.mux.buf.stat.rx_stat": {
+        "mask": "0xf", 
+        "addr": "0x50"
+    }, 
+    "tx.mux.buf.stat.tx_stat": {
+        "mask": "0xf0", 
+        "addr": "0x50"
+    }, 
+    "tx.mux.buf.stat.debug": {
+        "mask": "0xff00", 
+        "addr": "0x50"
+    }, 
+    "tx.mux.buf.buf_mon": {
+        "mask": "0xffffffff", 
+        "addr": "0x51"
+    }, 
+    "tx.mux.buf.buf_mon.lwm": {
+        "mask": "0xff", 
+        "addr": "0x51"
+    }, 
+    "tx.mux.buf.buf_mon.hwm": {
+        "mask": "0xff00", 
+        "addr": "0x51"
+    }, 
+    "tx.mux.buf.buf_mon.llwm": {
+        "mask": "0xff0000", 
+        "addr": "0x51"
+    }, 
+    "tx.mux.buf.buf_mon.lhwm": {
+        "mask": "0xff000000", 
+        "addr": "0x51"
+    }, 
+    "tx.mux.buf.ts_l": {
+        "mask": "0xffffffff", 
+        "addr": "0x52"
+    }, 
+    "tx.mux.buf.ts_h": {
+        "mask": "0xffffffff", 
+        "addr": "0x53"
+    }, 
+    "tx.mux.buf.vol_l": {
+        "mask": "0xffffffff", 
+        "addr": "0x54"
+    }, 
+    "tx.mux.buf.vol_h": {
+        "mask": "0xffffffff", 
+        "addr": "0x55"
+    }, 
+    "tx.mux.buf.blk_acc_l": {
+        "mask": "0xffffffff", 
+        "addr": "0x56"
+    }, 
+    "tx.mux.buf.blk_acc_h": {
+        "mask": "0xffffffff", 
+        "addr": "0x57"
+    }, 
+    "tx.mux.buf.blk_rej_l": {
+        "mask": "0xffffffff", 
+        "addr": "0x58"
+    }, 
+    "tx.mux.buf.blk_rej_h": {
+        "mask": "0xffffffff", 
+        "addr": "0x59"
+    }, 
+    "tx.mux.buf.blk_oflow_l": {
+        "mask": "0xffffffff", 
+        "addr": "0x5a"
+    }, 
+    "tx.mux.buf.blk_oflow_h": {
+        "mask": "0xffffffff", 
+        "addr": "0x5b"
+    }, 
+    "tx.udp": {
+        "mask": "0xffffffff", 
+        "addr": "0x200"
+    }, 
+    "tx.udp.udp_core_0": {
+        "mask": "0xffffffff", 
+        "addr": "0x200"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control": {
+        "mask": "0xffffffff", 
+        "addr": "0x200"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl": {
+        "mask": "0xffffffff", 
+        "addr": "0x200"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.src_mac_addr_lower": {
+        "mask": "0xffffffff", 
+        "addr": "0x200"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.src_mac_addr_upper": {
+        "mask": "0xffffffff", 
+        "addr": "0x201"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.src_mac_addr_upper.upper": {
+        "mask": "0xffff", 
+        "addr": "0x201"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.dst_mac_addr_lower": {
+        "mask": "0xffffffff", 
+        "addr": "0x202"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.dst_mac_addr_upper": {
+        "mask": "0xffffffff", 
+        "addr": "0x203"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.dst_mac_addr_upper.upper": {
+        "mask": "0xffff", 
+        "addr": "0x203"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ethertype": {
+        "mask": "0xffffffff", 
+        "addr": "0x204"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ethertype.lower": {
+        "mask": "0xffff", 
+        "addr": "0x204"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ipv4_header_0": {
+        "mask": "0xffffffff", 
+        "addr": "0x205"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_ver_hdr_len": {
+        "mask": "0xff", 
+        "addr": "0x205"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_service": {
+        "mask": "0xff00", 
+        "addr": "0x205"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_packet_length": {
+        "mask": "0xffff0000", 
+        "addr": "0x205"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ipv4_header_1": {
+        "mask": "0xffffffff", 
+        "addr": "0x206"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ipv4_header_1.ip_count": {
+        "mask": "0xffff", 
+        "addr": "0x206"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ipv4_header_1.ip_fragment": {
+        "mask": "0xffff0000", 
+        "addr": "0x206"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ipv4_header_2": {
+        "mask": "0xffffffff", 
+        "addr": "0x207"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ipv4_header_2.ip_ttl": {
+        "mask": "0xff", 
+        "addr": "0x207"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ipv4_header_2.ip_protocol": {
+        "mask": "0xff00", 
+        "addr": "0x207"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ipv4_header_2.header_checksum": {
+        "mask": "0xffff0000", 
+        "addr": "0x207"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.dst_ip_addr": {
+        "mask": "0xffffffff", 
+        "addr": "0x208"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.src_ip_addr": {
+        "mask": "0xffffffff", 
+        "addr": "0x209"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.udp_ports": {
+        "mask": "0xffffffff", 
+        "addr": "0x20a"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.udp_ports.src_port": {
+        "mask": "0xffff", 
+        "addr": "0x20a"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.udp_ports.dst_port": {
+        "mask": "0xffff0000", 
+        "addr": "0x20a"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.udp_length": {
+        "mask": "0xffffffff", 
+        "addr": "0x20b"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.udp_length.lower": {
+        "mask": "0xffff", 
+        "addr": "0x20b"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control": {
+        "mask": "0xffffffff", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.broadcast_en": {
+        "mask": "0x1", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.arp_en": {
+        "mask": "0x2", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.ping_en": {
+        "mask": "0x4", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.pass_uns_ethtype": {
+        "mask": "0x100", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.pass_uns_ipv4": {
+        "mask": "0x200", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.dst_mac_chk_en": {
+        "mask": "0x10000", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.src_mac_chk_en": {
+        "mask": "0x20000", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.dst_ip_chk_en": {
+        "mask": "0x40000", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.src_ip_chk_en": {
+        "mask": "0x80000", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.dst_port_chk_en": {
+        "mask": "0x100000", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.src_port_chk_en": {
+        "mask": "0x200000", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.packet_count_rst_n": {
+        "mask": "0x400000", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.strip_uns_pro": {
+        "mask": "0x1000000", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.strip_uns_eth": {
+        "mask": "0x2000000", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.filter_control.chk_ip_length": {
+        "mask": "0x4000000", 
+        "addr": "0x20c"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ifg": {
+        "mask": "0xffffffff", 
+        "addr": "0x20d"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.ifg.lower": {
+        "mask": "0xffff", 
+        "addr": "0x20d"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.control": {
+        "mask": "0xffffffff", 
+        "addr": "0x20e"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.control.fixed_pkt_size": {
+        "mask": "0x8", 
+        "addr": "0x20e"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.control.udp_checksum_zero": {
+        "mask": "0x10", 
+        "addr": "0x20e"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.control.lut_mode": {
+        "mask": "0x20", 
+        "addr": "0x20e"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.control.tuser_dst_prt": {
+        "mask": "0x40", 
+        "addr": "0x20e"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.control.tuser_src_prt": {
+        "mask": "0x80", 
+        "addr": "0x20e"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.control.reset_n": {
+        "mask": "0x8000", 
+        "addr": "0x20e"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.nz_rst_ctrl.control.udp_length": {
+        "mask": "0xffff0000", 
+        "addr": "0x20e"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.packet_counters": {
+        "mask": "0xffffffff", 
+        "addr": "0x210"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.packet_counters.udp_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x210"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.packet_counters.ping_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x211"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.packet_counters.arp_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x212"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.packet_counters.uns_etype_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x213"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.packet_counters.uns_pro_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x214"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.packet_counters.dropped_mac_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x215"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.packet_counters.dropped_ip_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x216"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.packet_counters.dropped_port_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x217"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.id_stat": {
+        "mask": "0xffffffff", 
+        "addr": "0x220"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.id_stat.ip_id": {
+        "mask": "0xffffffff", 
+        "addr": "0x220"
+    }, 
+    "tx.udp.udp_core_0.udp_core_control.id_stat.udp_core_id": {
+        "mask": "0xffffffff", 
+        "addr": "0x221"
+    }, 
+    "tx.udp.udp_core_1": {
+        "mask": "0xffffffff", 
+        "addr": "0x240"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control": {
+        "mask": "0xffffffff", 
+        "addr": "0x240"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl": {
+        "mask": "0xffffffff", 
+        "addr": "0x240"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.src_mac_addr_lower": {
+        "mask": "0xffffffff", 
+        "addr": "0x240"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.src_mac_addr_upper": {
+        "mask": "0xffffffff", 
+        "addr": "0x241"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.src_mac_addr_upper.upper": {
+        "mask": "0xffff", 
+        "addr": "0x241"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.dst_mac_addr_lower": {
+        "mask": "0xffffffff", 
+        "addr": "0x242"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.dst_mac_addr_upper": {
+        "mask": "0xffffffff", 
+        "addr": "0x243"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.dst_mac_addr_upper.upper": {
+        "mask": "0xffff", 
+        "addr": "0x243"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ethertype": {
+        "mask": "0xffffffff", 
+        "addr": "0x244"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ethertype.lower": {
+        "mask": "0xffff", 
+        "addr": "0x244"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ipv4_header_0": {
+        "mask": "0xffffffff", 
+        "addr": "0x245"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_ver_hdr_len": {
+        "mask": "0xff", 
+        "addr": "0x245"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_service": {
+        "mask": "0xff00", 
+        "addr": "0x245"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_packet_length": {
+        "mask": "0xffff0000", 
+        "addr": "0x245"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ipv4_header_1": {
+        "mask": "0xffffffff", 
+        "addr": "0x246"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ipv4_header_1.ip_count": {
+        "mask": "0xffff", 
+        "addr": "0x246"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ipv4_header_1.ip_fragment": {
+        "mask": "0xffff0000", 
+        "addr": "0x246"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ipv4_header_2": {
+        "mask": "0xffffffff", 
+        "addr": "0x247"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ipv4_header_2.ip_ttl": {
+        "mask": "0xff", 
+        "addr": "0x247"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ipv4_header_2.ip_protocol": {
+        "mask": "0xff00", 
+        "addr": "0x247"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ipv4_header_2.header_checksum": {
+        "mask": "0xffff0000", 
+        "addr": "0x247"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.dst_ip_addr": {
+        "mask": "0xffffffff", 
+        "addr": "0x248"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.src_ip_addr": {
+        "mask": "0xffffffff", 
+        "addr": "0x249"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.udp_ports": {
+        "mask": "0xffffffff", 
+        "addr": "0x24a"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.udp_ports.src_port": {
+        "mask": "0xffff", 
+        "addr": "0x24a"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.udp_ports.dst_port": {
+        "mask": "0xffff0000", 
+        "addr": "0x24a"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.udp_length": {
+        "mask": "0xffffffff", 
+        "addr": "0x24b"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.udp_length.lower": {
+        "mask": "0xffff", 
+        "addr": "0x24b"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control": {
+        "mask": "0xffffffff", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.broadcast_en": {
+        "mask": "0x1", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.arp_en": {
+        "mask": "0x2", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.ping_en": {
+        "mask": "0x4", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.pass_uns_ethtype": {
+        "mask": "0x100", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.pass_uns_ipv4": {
+        "mask": "0x200", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.dst_mac_chk_en": {
+        "mask": "0x10000", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.src_mac_chk_en": {
+        "mask": "0x20000", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.dst_ip_chk_en": {
+        "mask": "0x40000", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.src_ip_chk_en": {
+        "mask": "0x80000", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.dst_port_chk_en": {
+        "mask": "0x100000", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.src_port_chk_en": {
+        "mask": "0x200000", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.packet_count_rst_n": {
+        "mask": "0x400000", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.strip_uns_pro": {
+        "mask": "0x1000000", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.strip_uns_eth": {
+        "mask": "0x2000000", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.filter_control.chk_ip_length": {
+        "mask": "0x4000000", 
+        "addr": "0x24c"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ifg": {
+        "mask": "0xffffffff", 
+        "addr": "0x24d"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.ifg.lower": {
+        "mask": "0xffff", 
+        "addr": "0x24d"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.control": {
+        "mask": "0xffffffff", 
+        "addr": "0x24e"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.control.fixed_pkt_size": {
+        "mask": "0x8", 
+        "addr": "0x24e"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.control.udp_checksum_zero": {
+        "mask": "0x10", 
+        "addr": "0x24e"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.control.lut_mode": {
+        "mask": "0x20", 
+        "addr": "0x24e"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.control.tuser_dst_prt": {
+        "mask": "0x40", 
+        "addr": "0x24e"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.control.tuser_src_prt": {
+        "mask": "0x80", 
+        "addr": "0x24e"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.control.reset_n": {
+        "mask": "0x8000", 
+        "addr": "0x24e"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.nz_rst_ctrl.control.udp_length": {
+        "mask": "0xffff0000", 
+        "addr": "0x24e"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.packet_counters": {
+        "mask": "0xffffffff", 
+        "addr": "0x250"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.packet_counters.udp_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x250"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.packet_counters.ping_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x251"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.packet_counters.arp_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x252"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.packet_counters.uns_etype_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x253"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.packet_counters.uns_pro_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x254"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.packet_counters.dropped_mac_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x255"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.packet_counters.dropped_ip_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x256"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.packet_counters.dropped_port_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x257"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.id_stat": {
+        "mask": "0xffffffff", 
+        "addr": "0x260"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.id_stat.ip_id": {
+        "mask": "0xffffffff", 
+        "addr": "0x260"
+    }, 
+    "tx.udp.udp_core_1.udp_core_control.id_stat.udp_core_id": {
+        "mask": "0xffffffff", 
+        "addr": "0x261"
+    }, 
+    "tx.udp.udp_core_2": {
+        "mask": "0xffffffff", 
+        "addr": "0x280"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control": {
+        "mask": "0xffffffff", 
+        "addr": "0x280"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl": {
+        "mask": "0xffffffff", 
+        "addr": "0x280"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.src_mac_addr_lower": {
+        "mask": "0xffffffff", 
+        "addr": "0x280"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.src_mac_addr_upper": {
+        "mask": "0xffffffff", 
+        "addr": "0x281"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.src_mac_addr_upper.upper": {
+        "mask": "0xffff", 
+        "addr": "0x281"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.dst_mac_addr_lower": {
+        "mask": "0xffffffff", 
+        "addr": "0x282"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.dst_mac_addr_upper": {
+        "mask": "0xffffffff", 
+        "addr": "0x283"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.dst_mac_addr_upper.upper": {
+        "mask": "0xffff", 
+        "addr": "0x283"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ethertype": {
+        "mask": "0xffffffff", 
+        "addr": "0x284"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ethertype.lower": {
+        "mask": "0xffff", 
+        "addr": "0x284"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ipv4_header_0": {
+        "mask": "0xffffffff", 
+        "addr": "0x285"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_ver_hdr_len": {
+        "mask": "0xff", 
+        "addr": "0x285"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_service": {
+        "mask": "0xff00", 
+        "addr": "0x285"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_packet_length": {
+        "mask": "0xffff0000", 
+        "addr": "0x285"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ipv4_header_1": {
+        "mask": "0xffffffff", 
+        "addr": "0x286"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ipv4_header_1.ip_count": {
+        "mask": "0xffff", 
+        "addr": "0x286"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ipv4_header_1.ip_fragment": {
+        "mask": "0xffff0000", 
+        "addr": "0x286"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ipv4_header_2": {
+        "mask": "0xffffffff", 
+        "addr": "0x287"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ipv4_header_2.ip_ttl": {
+        "mask": "0xff", 
+        "addr": "0x287"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ipv4_header_2.ip_protocol": {
+        "mask": "0xff00", 
+        "addr": "0x287"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ipv4_header_2.header_checksum": {
+        "mask": "0xffff0000", 
+        "addr": "0x287"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.dst_ip_addr": {
+        "mask": "0xffffffff", 
+        "addr": "0x288"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.src_ip_addr": {
+        "mask": "0xffffffff", 
+        "addr": "0x289"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.udp_ports": {
+        "mask": "0xffffffff", 
+        "addr": "0x28a"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.udp_ports.src_port": {
+        "mask": "0xffff", 
+        "addr": "0x28a"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.udp_ports.dst_port": {
+        "mask": "0xffff0000", 
+        "addr": "0x28a"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.udp_length": {
+        "mask": "0xffffffff", 
+        "addr": "0x28b"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.udp_length.lower": {
+        "mask": "0xffff", 
+        "addr": "0x28b"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control": {
+        "mask": "0xffffffff", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.broadcast_en": {
+        "mask": "0x1", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.arp_en": {
+        "mask": "0x2", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.ping_en": {
+        "mask": "0x4", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.pass_uns_ethtype": {
+        "mask": "0x100", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.pass_uns_ipv4": {
+        "mask": "0x200", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.dst_mac_chk_en": {
+        "mask": "0x10000", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.src_mac_chk_en": {
+        "mask": "0x20000", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.dst_ip_chk_en": {
+        "mask": "0x40000", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.src_ip_chk_en": {
+        "mask": "0x80000", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.dst_port_chk_en": {
+        "mask": "0x100000", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.src_port_chk_en": {
+        "mask": "0x200000", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.packet_count_rst_n": {
+        "mask": "0x400000", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.strip_uns_pro": {
+        "mask": "0x1000000", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.strip_uns_eth": {
+        "mask": "0x2000000", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.filter_control.chk_ip_length": {
+        "mask": "0x4000000", 
+        "addr": "0x28c"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ifg": {
+        "mask": "0xffffffff", 
+        "addr": "0x28d"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.ifg.lower": {
+        "mask": "0xffff", 
+        "addr": "0x28d"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.control": {
+        "mask": "0xffffffff", 
+        "addr": "0x28e"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.control.fixed_pkt_size": {
+        "mask": "0x8", 
+        "addr": "0x28e"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.control.udp_checksum_zero": {
+        "mask": "0x10", 
+        "addr": "0x28e"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.control.lut_mode": {
+        "mask": "0x20", 
+        "addr": "0x28e"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.control.tuser_dst_prt": {
+        "mask": "0x40", 
+        "addr": "0x28e"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.control.tuser_src_prt": {
+        "mask": "0x80", 
+        "addr": "0x28e"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.control.reset_n": {
+        "mask": "0x8000", 
+        "addr": "0x28e"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.nz_rst_ctrl.control.udp_length": {
+        "mask": "0xffff0000", 
+        "addr": "0x28e"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.packet_counters": {
+        "mask": "0xffffffff", 
+        "addr": "0x290"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.packet_counters.udp_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x290"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.packet_counters.ping_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x291"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.packet_counters.arp_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x292"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.packet_counters.uns_etype_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x293"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.packet_counters.uns_pro_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x294"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.packet_counters.dropped_mac_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x295"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.packet_counters.dropped_ip_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x296"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.packet_counters.dropped_port_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x297"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.id_stat": {
+        "mask": "0xffffffff", 
+        "addr": "0x2a0"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.id_stat.ip_id": {
+        "mask": "0xffffffff", 
+        "addr": "0x2a0"
+    }, 
+    "tx.udp.udp_core_2.udp_core_control.id_stat.udp_core_id": {
+        "mask": "0xffffffff", 
+        "addr": "0x2a1"
+    }, 
+    "tx.udp.udp_core_3": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c0"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c0"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c0"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.src_mac_addr_lower": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c0"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.src_mac_addr_upper": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c1"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.src_mac_addr_upper.upper": {
+        "mask": "0xffff", 
+        "addr": "0x2c1"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.dst_mac_addr_lower": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c2"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.dst_mac_addr_upper": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c3"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.dst_mac_addr_upper.upper": {
+        "mask": "0xffff", 
+        "addr": "0x2c3"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ethertype": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c4"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ethertype.lower": {
+        "mask": "0xffff", 
+        "addr": "0x2c4"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ipv4_header_0": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c5"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_ver_hdr_len": {
+        "mask": "0xff", 
+        "addr": "0x2c5"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_service": {
+        "mask": "0xff00", 
+        "addr": "0x2c5"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ipv4_header_0.ip_packet_length": {
+        "mask": "0xffff0000", 
+        "addr": "0x2c5"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ipv4_header_1": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c6"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ipv4_header_1.ip_count": {
+        "mask": "0xffff", 
+        "addr": "0x2c6"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ipv4_header_1.ip_fragment": {
+        "mask": "0xffff0000", 
+        "addr": "0x2c6"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ipv4_header_2": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c7"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ipv4_header_2.ip_ttl": {
+        "mask": "0xff", 
+        "addr": "0x2c7"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ipv4_header_2.ip_protocol": {
+        "mask": "0xff00", 
+        "addr": "0x2c7"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ipv4_header_2.header_checksum": {
+        "mask": "0xffff0000", 
+        "addr": "0x2c7"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.dst_ip_addr": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c8"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.src_ip_addr": {
+        "mask": "0xffffffff", 
+        "addr": "0x2c9"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.udp_ports": {
+        "mask": "0xffffffff", 
+        "addr": "0x2ca"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.udp_ports.src_port": {
+        "mask": "0xffff", 
+        "addr": "0x2ca"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.udp_ports.dst_port": {
+        "mask": "0xffff0000", 
+        "addr": "0x2ca"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.udp_length": {
+        "mask": "0xffffffff", 
+        "addr": "0x2cb"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.udp_length.lower": {
+        "mask": "0xffff", 
+        "addr": "0x2cb"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control": {
+        "mask": "0xffffffff", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.broadcast_en": {
+        "mask": "0x1", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.arp_en": {
+        "mask": "0x2", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.ping_en": {
+        "mask": "0x4", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.pass_uns_ethtype": {
+        "mask": "0x100", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.pass_uns_ipv4": {
+        "mask": "0x200", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.dst_mac_chk_en": {
+        "mask": "0x10000", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.src_mac_chk_en": {
+        "mask": "0x20000", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.dst_ip_chk_en": {
+        "mask": "0x40000", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.src_ip_chk_en": {
+        "mask": "0x80000", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.dst_port_chk_en": {
+        "mask": "0x100000", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.src_port_chk_en": {
+        "mask": "0x200000", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.packet_count_rst_n": {
+        "mask": "0x400000", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.strip_uns_pro": {
+        "mask": "0x1000000", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.strip_uns_eth": {
+        "mask": "0x2000000", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.filter_control.chk_ip_length": {
+        "mask": "0x4000000", 
+        "addr": "0x2cc"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ifg": {
+        "mask": "0xffffffff", 
+        "addr": "0x2cd"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.ifg.lower": {
+        "mask": "0xffff", 
+        "addr": "0x2cd"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.control": {
+        "mask": "0xffffffff", 
+        "addr": "0x2ce"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.control.fixed_pkt_size": {
+        "mask": "0x8", 
+        "addr": "0x2ce"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.control.udp_checksum_zero": {
+        "mask": "0x10", 
+        "addr": "0x2ce"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.control.lut_mode": {
+        "mask": "0x20", 
+        "addr": "0x2ce"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.control.tuser_dst_prt": {
+        "mask": "0x40", 
+        "addr": "0x2ce"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.control.tuser_src_prt": {
+        "mask": "0x80", 
+        "addr": "0x2ce"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.control.reset_n": {
+        "mask": "0x8000", 
+        "addr": "0x2ce"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.nz_rst_ctrl.control.udp_length": {
+        "mask": "0xffff0000", 
+        "addr": "0x2ce"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.packet_counters": {
+        "mask": "0xffffffff", 
+        "addr": "0x2d0"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.packet_counters.udp_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x2d0"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.packet_counters.ping_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x2d1"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.packet_counters.arp_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x2d2"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.packet_counters.uns_etype_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x2d3"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.packet_counters.uns_pro_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x2d4"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.packet_counters.dropped_mac_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x2d5"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.packet_counters.dropped_ip_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x2d6"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.packet_counters.dropped_port_count": {
+        "mask": "0xffffffff", 
+        "addr": "0x2d7"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.id_stat": {
+        "mask": "0xffffffff", 
+        "addr": "0x2e0"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.id_stat.ip_id": {
+        "mask": "0xffffffff", 
+        "addr": "0x2e0"
+    }, 
+    "tx.udp.udp_core_3.udp_core_control.id_stat.udp_core_id": {
+        "mask": "0xffffffff", 
+        "addr": "0x2e1"
+    }, 
+    "tx.udp.debug": {
+        "mask": "0xffffffff", 
+        "addr": "0x300"
+    }, 
+    "tx.udp.debug.csr": {
+        "mask": "0xffffffff", 
+        "addr": "0x300"
+    }, 
+    "tx.udp.debug.csr.ctrl": {
+        "mask": "0xffffffff", 
+        "addr": "0x300"
+    }, 
+    "tx.udp.debug.csr.ctrl.loopback": {
+        "mask": "0x7", 
+        "addr": "0x300"
+    }, 
+    "tx.udp.debug.csr.stat": {
+        "mask": "0xffffffff", 
+        "addr": "0x301"
+    }, 
+    "tx.udp.debug.csr.stat.rx_status": {
+        "mask": "0xf", 
+        "addr": "0x301"
+    }, 
+    "tx.udp.debug.csr.stat.tx_status": {
+        "mask": "0xf0", 
+        "addr": "0x301"
+    }, 
+    "tx.udp.freq": {
+        "mask": "0xffffffff", 
+        "addr": "0x310"
+    }, 
+    "tx.udp.freq.ctrl": {
+        "mask": "0xffffffff", 
+        "addr": "0x310"
+    }, 
+    "tx.udp.freq.ctrl.chan_sel": {
+        "mask": "0xf", 
+        "addr": "0x310"
+    }, 
+    "tx.udp.freq.ctrl.en_crap_mode": {
+        "mask": "0x10", 
+        "addr": "0x310"
+    }, 
+    "tx.udp.freq.freq": {
+        "mask": "0xffffffff", 
+        "addr": "0x311"
+    }, 
+    "tx.udp.freq.freq.count": {
+        "mask": "0xffffff", 
+        "addr": "0x311"
+    }, 
+    "tx.udp.freq.freq.valid": {
+        "mask": "0x1000000", 
+        "addr": "0x311"
+    }, 
+    "ctrl": {
+        "mask": "0xffffffff", 
+        "addr": "0x400"
+    }, 
+    "ctrl.sel": {
+        "mask": "0xf", 
+        "addr": "0x400"
+    }, 
+    "src": {
+        "mask": "0xffffffff", 
+        "addr": "0x401"
+    }, 
+    "src.ctrl": {
+        "mask": "0xffffffff", 
+        "addr": "0x401"
+    }, 
+    "src.ctrl.en": {
+        "mask": "0x1", 
+        "addr": "0x401"
+    }, 
+    "src.ctrl.dlen": {
+        "mask": "0xfff0", 
+        "addr": "0x401"
+    }, 
+    "src.ctrl.rate_rdx": {
+        "mask": "0x3f0000", 
+        "addr": "0x401"
+    }
+}
