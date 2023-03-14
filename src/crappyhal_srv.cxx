@@ -167,8 +167,8 @@ int main(int argc, char* argv[]) {
         }
 
         std::string cmd = data["cmd"];
-        long addr = std::stol (data["addr"].get<std::string>(),nullptr,16);
-        long mask = std::stol (data["mask"].get<std::string>(),nullptr,16);
+        uint32_t addr = data["addr"].get<uint32_t>();
+        uint32_t mask = data["mask"].get<uint32_t>();
 
         // std::cout << "addr " << data["addr"] << " " << data["addr"].get<std::string>() << " " << addr << std::endl;
         // std::cout << "mask " << data["mask"] << " " << data["mask"].get<std::string>() << " " << mask << std::endl;
@@ -193,9 +193,10 @@ int main(int argc, char* argv[]) {
             json_reply(socket, {{"read_val", ss.str()}} );
             continue;
         } else if ( cmd == "write" ) {
-            long val = std::stol(data["val"].get<std::string>(),nullptr,32);
+            uint32_t val = data["val"].get<uint32_t>();
+
             hw.write_addr(addr, mask, val);
-            std::cout << "Write 0x" << std::hex << val << " at 0x" << addr << " with mask ox" << mask << std::endl;
+            std::cout << "Write 0x" << std::hex << val << " at 0x" << addr << " with mask 0x" << mask << std::endl;
             json_reply(socket, {{"write_done", true}} );
             continue;
 
