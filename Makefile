@@ -1,5 +1,5 @@
 
-CXXFLAGS = -g -O2 -Isrc
+CXXFLAGS = -g -O2 -Isrc -std=c++17
 LFLAGS = -lzmq
 
 # output binary for each of these (no headers)
