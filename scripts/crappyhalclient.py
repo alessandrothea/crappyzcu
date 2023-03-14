@@ -38,7 +38,7 @@ class CrappyRawHardwareClient:
         self.socket.send(json.dumps(req).encode())
         message = self.socket.recv()
         rpl = json.loads(message)
-        # print(f"Received reply {req} [{rpl}]")
+        #print(f"Received reply {req} [{rpl}]")
         return int(rpl['read_val'], 0)
 
 

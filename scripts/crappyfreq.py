@@ -8,15 +8,19 @@ from rich.progress import track
 
 from crappyhalclient import CrappyHardwareClient
 
-host = 'np04-zcu-001'
+ctrl_hosts = [
+    'np04-zcu-001',
+    'np04-wib-503'
+]
+
 port = 5556
-# addrtab = 'zcu_top.flat_regmap.json'
 addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_mark3', 'zcu_top.xml')
 
 @click.command()
-def main():
+@click.argument('ctrl_id', type=click.Choice(ctrl_hosts))
+def main(ctrl_id):
     """Simple frequency measurement"""
-    hw = CrappyHardwareClient(host, port, addrtab)
+    hw = CrappyHardwareClient(ctrl_id, port, addrtab)
     hw.connect()
     clk_chans = range(4)
 

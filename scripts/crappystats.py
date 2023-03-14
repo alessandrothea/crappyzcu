@@ -47,7 +47,11 @@ def read_and_print(hw, reg_list):
 
 # -----------------------------------------------------------------------------
 
-host = 'np04-zcu-001'
+ctrl_hosts = [
+    'np04-zcu-001',
+    'np04-wib-503'
+]
+
 port = 5556
 # addrtab = 'zcu_top.flat_regmap.json'
 addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_mark3', 'zcu_top.xml')
@@ -55,12 +59,13 @@ addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_mark
 mgts_all = tuple(str(i) for i in range(MAX_MGT))
 
 @click.command()
+@click.argument('ctrl_id', type=click.Choice(ctrl_hosts))
 @click.option('-m', '--mgts', 'sel_mgts', type=click.Choice(mgts_all), multiple=True, default=None)
-def main(sel_mgts):
+def main(ctrl_id, sel_mgts):
     """Simple program that greets NAME for a total of COUNT times."""
 
 
-    hw = CrappyHardwareClient(host, port, addrtab)
+    hw = CrappyHardwareClient(ctrl_id, port, addrtab)
     hw.connect()
 
     magic = hw.read('tx.info.magic')
