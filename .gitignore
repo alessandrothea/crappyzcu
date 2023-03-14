@@ -1,3 +1,7 @@
 __pycache__
-*.pyc
 venv
+build
+*.pyc
+*.d
+*.o
+crappyhal_srv
