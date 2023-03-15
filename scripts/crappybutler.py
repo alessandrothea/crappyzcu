@@ -2,6 +2,7 @@
 
 import click
 import os
+import socket
 from rich import print
 from rich.table import Table
 from rich.progress import track
@@ -115,20 +116,30 @@ def main(ctrl_id, src_id, dst_id, mgt, n_gen):
         raise ValueError(f"{n_gen} must be lower than the number of generators per mgt ({n_srcs_p_mgt})")
 
 
-    print('Resetting the tmux')
+    print('Disabling the tx mux block')
     hw.write('tx.mux.csr.ctrl', 0x0)
-    print('Done')
 
     dst = rx_endpoints[dst_id]
     src = tx_endpoints[src_id]
 
     udp_core_ctrl = f'tx.udp.udp_core_{mgt}.udp_core_control.nz_rst_ctrl'
     hw.write(f'{udp_core_ctrl}.filter_control', 0x07400307)
+    # hw.write(f'{udp_core_ctrl}.filter_control', 0x0)
+
     # Our IP address = 10.73.139.23
+    print(f"Our ip address: {socket.inet_ntoa(src['ip'].to_bytes(4, 'big'))}")
     hw.write(f'{udp_core_ctrl}.src_ip_addr', src['ip']) 
     # Their IP address = 10.73.139.23
+    print(f"Their ip address: {socket.inet_ntoa(dst['ip'].to_bytes(4, 'big'))}")
     hw.write(f'{udp_core_ctrl}.dst_ip_addr', dst['ip']) 
+    # Our MAC address
     # Dest MAC address
+    print(f"Our mac address: 0x{src['mac']:012x}")
+    hw.write(f'{udp_core_ctrl}.src_mac_addr_lower', src['mac'] & 0xffffffff) 
+    hw.write(f'{udp_core_ctrl}.src_mac_addr_upper', (src['mac'] >> 32) & 0xffff) 
+
+    # Dest MAC address
+    print(f"Their mac address: 0x{dst['mac']:012x}")
     hw.write(f'{udp_core_ctrl}.dst_mac_addr_lower', dst['mac'] & 0xffffffff) 
     hw.write(f'{udp_core_ctrl}.dst_mac_addr_upper', (dst['mac'] >> 32) & 0xffff) 
 
@@ -150,26 +161,9 @@ def main(ctrl_id, src_id, dst_id, mgt, n_gen):
     #     hw.write(f'src.ctrl.rate_rdx', 0xa) 
 
 
-    hw.write('tx.mux.csr.ctrl.en', 0x1)
+    hw.write('tx.mux.csr.ctrl.en', 0x0)
     hw.write('tx.mux.csr.ctrl.en_buf', 0x1)
-    hw.write('tx.mux.csr.ctrl.tx_en', 0x1)
-
-    # # print('---Reading info regs---')
-    # ctrl_i =read_regs(hw, hw.get_regs('tx.info.*'))
-    # # print('---Reading ctrl regs---')
-    # ctrl_d =read_regs(hw, hw.get_regs('tx.mux.csr.ctrl.*'))
-
-
-    # # print('---Reading stat regs---')
-    # stat_d =read_regs(hw, hw.get_regs('tx.mux.csr.stat.*'))
-
-    # grid = Table(title="tx_mux", show_edge=False, show_header=False, show_lines=False, pad_edge=False, padding=0)
-    # grid.add_column("info")
-    # grid.add_column("ctrl")
-    # grid.add_column("stat")
-    # grid.add_row(dict_to_table(ctrl_i), dict_to_table(ctrl_d), dict_to_table(stat_d))
-    # print(grid)
-
+    hw.write('tx.mux.csr.ctrl.tx_en', 0x0)
 
 if __name__ == '__main__':
     main()

@@ -36,9 +36,12 @@ def main(port):
             continue
         
         cmd = d['cmd']
-        addr = int(d['addr'], 0)
-        mask = int(d['mask'], 0)
-        val = int(d['val'], 0) if 'val' in d else None
+        # addr = int(d['addr'], 0)
+        # mask = int(d['mask'], 0)
+        # val = int(d['val'], 0) if 'val' in d else None
+        addr = d['addr']
+        mask = d['mask']
+        val = d['val'], 0 if 'val' in d else None
 
         if addr < 0 or addr > 0xffffffff:
             logger.error("Invalid address received")

@@ -93,16 +93,16 @@ def main(ctrl_id, sel_mgts):
     # mgts = [int(s) for s in (mgts if mgts else [0])]
 
 
-    print('Resetting tx_mux')
-    hw.write('tx.mux.csr.ctrl', 0x0)
-    print('Done')
+    # print('Resetting tx_mux')
+    # hw.write('tx.mux.csr.ctrl', 0x0)
+    # print('Done')
 
-    hw.write('tx.mux.csr.ctrl.en', True)
-    hw.write('tx.mux.csr.ctrl.en_buf', True)
-    hw.write('tx.mux.csr.ctrl.tx_en', True)
+    # hw.write('tx.mux.csr.ctrl.en', True)
+    # hw.write('tx.mux.csr.ctrl.en_buf', True)
+    # hw.write('tx.mux.csr.ctrl.tx_en', True)
 
     hw.write('tx.mux.csr.ctrl.sample', True)
-    time.sleep(0.1)
+    time.sleep(1)
     hw.write('tx.mux.csr.ctrl.sample', False)
 
 
@@ -115,11 +115,14 @@ def main(ctrl_id, sel_mgts):
     # print('---Reading stat regs---')
     stat_d =read_regs(hw, hw.get_regs('tx.mux.csr.stat.*'))
 
-    grid = Table(title="tx_mux", show_edge=False, show_header=False, show_lines=False, pad_edge=False, padding=0)
+    grid = Table.grid()
     grid.add_column("info")
     grid.add_column("ctrl")
     grid.add_column("stat")
-    grid.add_row(dict_to_table(ctrl_i), dict_to_table(ctrl_d), dict_to_table(stat_d))
+    grid.add_row(
+        dict_to_table(ctrl_i, title='tx_mux info'),
+        dict_to_table(ctrl_d, title='tx_mux ctrl'), 
+        dict_to_table(stat_d, title='tx mux stat'))
     print(grid)
 
 
@@ -128,25 +131,29 @@ def main(ctrl_id, sel_mgts):
     for i in sel_mgts:
         print()
         print()
-        print(f'---Reading Mux {i}---')
+        print(f'---Reading Tx  Mux {i}---')
         hw.write('tx.mux.csr.ctrl.sel_mux',i)
-        stat_regs = (
-            [ n for n in hw.addrtab if n.startswith('tx.mux.mux.stat') ] +
-            []
-            )
+        stat_mux =read_regs(hw, hw.get_regs('tx.mux.mux.stat.*'))
+        print(dict_to_table(stat_mux))
 
-        read_and_print(hw, stat_regs)
+        stat_udp =read_regs(hw, hw.get_regs(f'tx.udp.udp_core_{i}.udp_core_control.packet_counters.*'))
+        ctrl_udp =read_regs(hw, hw.get_regs(f'tx.udp.udp_core_{i}.udp_core_control.nz_rst_ctrl.(filter_control|src|dst|udp).*'))
+
+        grid = Table.grid()
+        grid.add_column("ctrl")
+        grid.add_column("stat")
+        grid.add_row(
+            dict_to_table(ctrl_udp, title="udp ctrl"),
+            dict_to_table(stat_udp, title="udp stat"),
+        )
+        print(grid)
+
 
         d = {}
         src_ids = tuple(range(n_srcs_p_mgt*i, n_srcs_p_mgt*(i+1)))
         for j in track(src_ids, description='Reading buffer status'):
             hw.write('tx.mux.csr.ctrl.sel_buf',j)
-            stat_regs = (
-                [ n for n in hw.addrtab if n.startswith('tx.mux.buf') ] +
-                []
-                )
-                
-            d[j] = read_regs(hw, stat_regs)
+            d[j] = read_regs(hw, hw.get_regs('tx.mux.buf.*'))
 
         # Create the summary table
         t = Table()

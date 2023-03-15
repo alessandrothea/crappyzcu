@@ -11,6 +11,10 @@ import collections
 
 uhal.setLogLevelTo(uhal.LogLevel.WARNING)
 
+class CrappyServerReplyTimeout(Exception):
+    ""
+    pass
+
 class CrappyRawHardwareClient:
 
     def __init__(self, host: str, port: int):
@@ -18,6 +22,7 @@ class CrappyRawHardwareClient:
         self.port = port
         self.context = None
         self.socket = None
+        self.timeout=1000
 
     def __del__(self):
         self.disconnect()
@@ -34,8 +39,12 @@ class CrappyRawHardwareClient:
 
     def read_addr(self, addr, mask):
 
-        req = {'cmd': 'read', 'addr': hex(addr), 'mask': hex(mask)}
+        req = {'cmd': 'read', 'addr': addr, 'mask': mask}
         self.socket.send(json.dumps(req).encode())
+        if self.socket.poll(self.timeout, zmq.POLLIN):
+            message.recv(zmq.NOBLOCK))
+        else:
+            raise CrappyServerReplyTimeout()"
         message = self.socket.recv()
         rpl = json.loads(message)
         #print(f"Received reply {req} [{rpl}]")
@@ -43,7 +52,7 @@ class CrappyRawHardwareClient:
 
 
     def write_addr(self, addr, mask, val):
-        req = {'cmd': 'write', 'addr': hex(addr), 'mask': hex(mask), 'val': hex(val)}
+        req = {'cmd': 'write', 'addr': addr, 'mask': mask, 'val': val}
         self.socket.send(json.dumps(req).encode())
         message = self.socket.recv()
         # print(f"Received reply {req} [{message.decode('utf-8')}]")
