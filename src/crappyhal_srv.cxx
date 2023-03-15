@@ -13,13 +13,13 @@
 
 using json = nlohmann::json;
 
-// struct DevMemMappingError : public std::exception
-// {
-// 	const char * what () const throw ()
-//     {
-//     	return "Failed to map /dev/mem to memory";
-//     }
-// };
+struct DevMemMappingError : public std::exception
+{
+	const char * what () const throw ()
+    {
+    	return "Failed to map /dev/mem to memory";
+    }
+};
 
 uint32_t get_bitshift(uint32_t mask) {
     uint32_t m = mask;
@@ -39,7 +39,9 @@ public:
         m_addr_len = addr_len;
 
         int r = mem_map();
-        std::cout << r << std::endl;
+        if ( r != 0 ) {
+            throw DevMemMappingError();
+        }
     }
 
     ~CrappyHardware() {
@@ -105,11 +107,12 @@ private:
 
 void json_reply(zmq::socket_t& socket, const json& data) {
     std::string reply_str = data.dump(); 
-    // std::cout << "sending message '" << reply_str << "'" << std::endl;
 
     zmq::message_t reply(reply_str.size());
     memcpy((void*)reply.data(), reply_str.c_str(), reply_str.size());
-    socket.send(reply,zmq::send_flags::none);
+
+    // Send w/o waiting in case the client is not there any longer.    
+    socket.send(reply, zmq::send_flags::none);
 }
 
 json json_receive(zmq::socket_t& socket) {
@@ -123,16 +126,40 @@ json json_receive(zmq::socket_t& socket) {
 
 int main(int argc, char* argv[]) {
 
-    // json data;
-    // data["xxx"] = 1;
 
-    // std::cout << "Hello World " << data << std::endl;
-    std::cout << "Hello World "<< std::endl;
+    if ( argc != 2 ) {
+        std::cerr << "ERROR: 1 argument expected, " << argc << ", found."<< std::endl;
+        std::cout << "Usage: " << argv[0] << " {wib,zcu102}" << std::endl;
+        exit(1);
+    }
 
-    CrappyHardware hw(0x80000000, 0x10000);
+    std::string device = argv[1];
+    std::map<std::string, uint64_t> device_address_map = {
+        {"zcu102", 0x80000000},
+        {"wib", 0xa0020000},
+    };
+    
+
+    std::cout << device << std::endl;
+
+    auto device_it = device_address_map.find(device);
+    if ( device_it == device_address_map.end() ) {
+        std::cerr << "ERROR: device " << device << " unknown."<< std::endl;
+        exit(-1);
+    }
+
+    // uint64_t axi_base_addr = 0x80000000;
+    uint64_t axi_base_addr = device_it->second;
+    uint64_t axi_addr_width = 0x10000;
+
+    std::cout << "CrappyHAL server starting"<< std::endl;
+    std::cout << "- Base AXI address: 0x" << std::hex << axi_base_addr << std::endl;
+    std::cout << "- IPBus address width (AXI space): 0x" << std::hex << axi_addr_width << std::endl;
+
+    CrappyHardware hw(axi_base_addr, axi_addr_width);
     uint32_t v;
     v = hw.read_addr(0x0, 0xffffffff);
-    // std::cout << std::hex << v << std::endl;
+    std::cout << "" << std::hex << v << std::endl;
 
     zmq::context_t context;
     zmq::socket_t socket(context, ZMQ_REP);
@@ -169,9 +196,6 @@ int main(int argc, char* argv[]) {
         std::string cmd = data["cmd"];
         uint32_t addr = data["addr"].get<uint32_t>();
         uint32_t mask = data["mask"].get<uint32_t>();
-
-        // std::cout << "addr " << data["addr"] << " " << data["addr"].get<std::string>() << " " << addr << std::endl;
-        // std::cout << "mask " << data["mask"] << " " << data["mask"].get<std::string>() << " " << mask << std::endl;
 
         if ( addr < 0 or addr > 0xffffffff ) {
             std::cerr << "Invalid address received" << std::endl;
