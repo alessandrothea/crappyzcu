@@ -142,6 +142,39 @@ def enable(obj, enable, buf_en, tx_en):
         hw.write('tx.mux.csr.ctrl.tx_en', tx_en)
 
 
+    # print('---Reading ctrl regs---')
+    ctrl_d =read_regs(hw, hw.get_regs('tx.mux.csr.ctrl.*'))
+    print(
+        dict_to_table(ctrl_d, title='tx_mux ctrl'), 
+    )
+
+
+@main.command("mux-config")
+@click.argument('detid', type=int)
+@click.argument('crate', type=int)
+@click.argument('slot', type=int)
+@click.option('-m', '--mgt', type=int, default=0)
+@click.pass_obj
+def mux_config(obj, detid, crate, slot, mgt):
+    """Comfigure the UDP blocks """
+
+    hw = obj.hw
+
+    n_mgt = obj.n_mgt
+    n_src = obj.n_src
+    n_srcs_p_mgt = n_src//n_mgt
+
+    if mgt >= n_mgt:
+        raise ValueError(f"MGT {mgt} not instantiated")
+    
+    hw.write('tx.mux.csr.ctrl.sel_mux',mgt)
+    hw.write('tx.mux.mux.ctrl.detid', detid)
+    hw.write('tx.mux.mux.ctrl.crate', crate)
+    hw.write('tx.mux.mux.ctrl.slot', slot)
+
+    ctrl_mux =read_regs(hw, hw.get_regs('tx.mux.mux.ctrl.*'))
+    print(ctrl_mux)
+
 @main.command("udp-config")
 @click.argument('src_id', type=click.Choice(tx_endpoints.keys()))
 @click.argument('dst_id', type=click.Choice(rx_endpoints.keys()))
@@ -220,8 +253,6 @@ def src_config(obj, mgt, n_gen):
         hw.write(f'src.ctrl.rate_rdx', 0xa) 
 
 
-
-
 @main.command()
 @click.pass_obj
 @click.option('-m', '--mgts', 'sel_mgts', type=click.Choice(mgts_all), multiple=True, default=None)
@@ -258,13 +289,13 @@ def stats(obj, sel_mgts, seconds):
 
 
     # print('---Reading info regs---')
-    ctrl_i =read_regs(hw, hw.get_regs('tx.info.*'))
+    ctrl_i = read_regs(hw, hw.get_regs('tx.info.*'))
     # print('---Reading ctrl regs---')
-    ctrl_d =read_regs(hw, hw.get_regs('tx.mux.csr.ctrl.*'))
+    ctrl_d = read_regs(hw, hw.get_regs('tx.mux.csr.ctrl.*'))
 
 
     # print('---Reading stat regs---')
-    stat_d =read_regs(hw, hw.get_regs('tx.mux.csr.stat.*'))
+    stat_d = read_regs(hw, hw.get_regs('tx.mux.csr.stat.*'))
 
     grid = Table.grid()
     grid.add_column("info")
@@ -284,8 +315,17 @@ def stats(obj, sel_mgts, seconds):
         print()
         print(f'---Reading Tx  Mux {i}---')
         hw.write('tx.mux.csr.ctrl.sel_mux',i)
+        ctrl_mux =read_regs(hw, hw.get_regs('tx.mux.mux.ctrl.*'))
         stat_mux =read_regs(hw, hw.get_regs('tx.mux.mux.stat.*'))
-        print(dict_to_table(stat_mux))
+
+        grid = Table.grid()
+        grid.add_column("ctrl")
+        grid.add_column("stat")
+        grid.add_row(
+            dict_to_table(ctrl_mux, title="mux ctrl"),
+            dict_to_table(stat_mux, title="mux stat"),
+        )
+        print(grid)
 
         stat_udp =read_regs(hw, hw.get_regs(f'tx.udp.udp_core_{i}.udp_core_control.packet_counters.*'))
         ctrl_udp =read_regs(hw, hw.get_regs(f'tx.udp.udp_core_{i}.udp_core_control.nz_rst_ctrl.(filter_control|src|dst|udp).*'))
