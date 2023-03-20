@@ -68,7 +68,7 @@ class CrappyHardware(CrappyRawHardware):
 
     @property
     def addrtab(self):
-        return self._addrtabt
+        return self._addrtab
 
     def read(self, name):
         if not name in self._addrtab:

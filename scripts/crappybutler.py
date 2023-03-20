@@ -83,7 +83,9 @@ ctrl_hosts = [
     'np04-wib-503'
 ]
 port = 5556
-addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_mark3', 'zcu_top.xml')
+# addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_mark3', 'zcu_top.xml')
+# addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_v0.9.0', 'zcu_top.xml')
+addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_v0.9.1_b0', 'zcu_top.xml')
 
 # N_MGT=4
 # N_SRC=8
@@ -102,6 +104,7 @@ def main(ctx, ctrl_id):
     obj = CrappyObj
 
     obj.hw = CrappyHardwareClient(ctrl_id, port, addrtab)
+    # print(obj.hw.addrtab)
     obj.hw.connect()
     print(f"Connected to '{ctrl_id}'")
     magic = obj.hw.read('tx.info.magic')
@@ -125,13 +128,17 @@ def main(ctx, ctrl_id):
 @click.option('--en/--dis', 'enable', default=None)
 @click.option('--buf-en/--buf-dis', 'buf_en', default=None)
 @click.option('--tx-en/--tx-dis', 'tx_en', default=None)
-
+@click.option('-m', '--mgt', type=int, default=0)
 @click.pass_obj
-def enable(obj, enable, buf_en, tx_en):
+def enable(obj, enable, buf_en, tx_en, mgt):
     hw = obj.hw
+    n_mgt = obj.n_mgt
 
-    print(enable, buf_en, tx_en)
+    if mgt >= n_mgt:
+        raise ValueError(f"MGT {mgt} not instantiated")
+    hw.write('tx.csr.ctrl.sel',mgt)
 
+    print(f"Setting {mgt} en:{enable}, buf_en: {buf_en}, tx_en: {tx_en}")
     if enable is not None:
         hw.write('tx.mux.csr.ctrl.en', enable)
 
@@ -167,7 +174,7 @@ def mux_config(obj, detid, crate, slot, mgt):
     if mgt >= n_mgt:
         raise ValueError(f"MGT {mgt} not instantiated")
     
-    hw.write('tx.mux.csr.ctrl.sel_mux',mgt)
+    hw.write('tx.csr.ctrl.sel',mgt)
     hw.write('tx.mux.mux.ctrl.detid', detid)
     hw.write('tx.mux.mux.ctrl.crate', crate)
     hw.write('tx.mux.mux.ctrl.slot', slot)
@@ -283,29 +290,23 @@ def stats(obj, sel_mgts, seconds):
     # mgts = [int(s) for s in (mgts if mgts else [0])]
 
     print(f"seconds counters for {seconds}s")
-    hw.write('tx.mux.csr.ctrl.sample', True)
+    hw.write('tx.samp.ctrl.samp', True)
     time.sleep(seconds)
-    hw.write('tx.mux.csr.ctrl.sample', False)
+    hw.write('tx.samp.ctrl.samp', False)
 
 
     # print('---Reading info regs---')
     ctrl_i = read_regs(hw, hw.get_regs('tx.info.*'))
-    # print('---Reading ctrl regs---')
-    ctrl_d = read_regs(hw, hw.get_regs('tx.mux.csr.ctrl.*'))
 
-
-    # print('---Reading stat regs---')
-    stat_d = read_regs(hw, hw.get_regs('tx.mux.csr.stat.*'))
-
-    grid = Table.grid()
-    grid.add_column("info")
-    grid.add_column("ctrl")
-    grid.add_column("stat")
-    grid.add_row(
-        dict_to_table(ctrl_i, title='tx_mux info'),
-        dict_to_table(ctrl_d, title='tx_mux ctrl'), 
-        dict_to_table(stat_d, title='tx mux stat'))
-    print(grid)
+    # grid = Table.grid()
+    # grid.add_column("info")
+    # grid.add_column("ctrl")
+    # grid.add_column("stat")
+    # grid.add_row(
+    #     dict_to_table(ctrl_i, title='tx_mux info'),
+    #     dict_to_table(ctrl_d, title='tx_mux ctrl'), 
+    #     dict_to_table(stat_d, title='tx mux stat'))
+    print(dict_to_table(ctrl_i, title='tx_mux info'))
 
 
     n_srcs_p_mgt = n_src//n_mgt
@@ -313,8 +314,24 @@ def stats(obj, sel_mgts, seconds):
     for i in sel_mgts:
         print()
         print()
-        print(f'---Reading Tx  Mux {i}---')
-        hw.write('tx.mux.csr.ctrl.sel_mux',i)
+        print(f'---Reading Tx Mux {i}---')
+        hw.write('tx.csr.ctrl.sel',i)
+
+        # print('---Reading ctrl regs---')
+        ctrl_d = read_regs(hw, hw.get_regs('tx.mux.csr.ctrl.*'))
+
+        # print('---Reading stat regs---')
+        stat_d = read_regs(hw, hw.get_regs('tx.mux.csr.stat.*'))
+
+        grid = Table.grid()
+        grid.add_column("ctrl")
+        grid.add_column("stat")
+        grid.add_row(
+            dict_to_table(ctrl_d, title='tx_mux ctrl'), 
+            dict_to_table(stat_d, title='tx mux stat'))
+        print(grid)
+
+
         ctrl_mux =read_regs(hw, hw.get_regs('tx.mux.mux.ctrl.*'))
         stat_mux =read_regs(hw, hw.get_regs('tx.mux.mux.stat.*'))
 
@@ -341,7 +358,7 @@ def stats(obj, sel_mgts, seconds):
 
 
         d = {}
-        src_ids = tuple(range(n_srcs_p_mgt*i, n_srcs_p_mgt*(i+1)))
+        src_ids = tuple(range(n_srcs_p_mgt))
         for j in track(src_ids, description='Reading buffer status'):
             hw.write('tx.mux.csr.ctrl.sel_buf',j)
             d[j] = read_regs(hw, hw.get_regs('tx.mux.buf.*'))

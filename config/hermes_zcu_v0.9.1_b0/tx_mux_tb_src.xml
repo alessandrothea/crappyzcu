@@ -1,0 +1,7 @@
+<node description="tx_mux_tb_rx registers" fwinfo="endpoint;width=0">
+    <node id="ctrl" address="0x0">
+        <node id="en" mask="0x1"/>    
+        <node id="dlen" mask="0xfff0"/>
+        <node id="rate_rdx" mask="0x3f0000"/>
+    </node>
+</node>

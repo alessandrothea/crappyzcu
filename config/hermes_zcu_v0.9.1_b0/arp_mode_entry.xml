@@ -1,0 +1,8 @@
+<node id="arp_mode_entry" address="0x0" fwinfo="endpoint;width=0">
+    <node id="active"           mask="0x00000001" description="Asserted When Position Is Active"/>
+    <node id="timed_out"        mask="0x00000002" description="Asserted If ARP Refresh Timer Has Timed Out"/>
+    <node id="seen_response"    mask="0x00000004" description="Asserted If Response Has Been Seen From This Position"/>
+    <node id="request_sent"     mask="0x00000008" description="Asserted If A Request Has Been Sent and Awaiting Response"/>
+    <node id="request_timeout"  mask="0x0000FFF0" description="How Long Before Request Times Out"/>
+    <node id="refresh_timeout"  mask="0xFFFF0000" description="How Long Before Position Needs Refresh"/>
+</node>
