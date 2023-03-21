@@ -128,17 +128,17 @@ def main(ctx, ctrl_id):
 @click.option('--en/--dis', 'enable', default=None)
 @click.option('--buf-en/--buf-dis', 'buf_en', default=None)
 @click.option('--tx-en/--tx-dis', 'tx_en', default=None)
-@click.option('-m', '--mgt', type=int, default=0)
+@click.option('-l', '--link', type=int, default=0)
 @click.pass_obj
-def enable(obj, enable, buf_en, tx_en, mgt):
+def enable(obj, enable, buf_en, tx_en, link):
     hw = obj.hw
     n_mgt = obj.n_mgt
 
-    if mgt >= n_mgt:
-        raise ValueError(f"MGT {mgt} not instantiated")
-    hw.write('tx.csr.ctrl.sel',mgt)
+    if link >= n_mgt:
+        raise ValueError(f"MGT {link} not instantiated")
+    hw.write('tx.csr.ctrl.sel',link)
 
-    print(f"Setting {mgt} en:{enable}, buf_en: {buf_en}, tx_en: {tx_en}")
+    print(f"Setting {link} en:{enable}, buf_en: {buf_en}, tx_en: {tx_en}")
     if enable is not None:
         hw.write('tx.mux.csr.ctrl.en', enable)
 
@@ -160,9 +160,9 @@ def enable(obj, enable, buf_en, tx_en, mgt):
 @click.argument('detid', type=int)
 @click.argument('crate', type=int)
 @click.argument('slot', type=int)
-@click.option('-m', '--mgt', type=int, default=0)
+@click.option('-l', '--link', type=int, default=0)
 @click.pass_obj
-def mux_config(obj, detid, crate, slot, mgt):
+def mux_config(obj, detid, crate, slot, link):
     """Comfigure the UDP blocks """
 
     hw = obj.hw
@@ -171,10 +171,10 @@ def mux_config(obj, detid, crate, slot, mgt):
     n_src = obj.n_src
     n_srcs_p_mgt = n_src//n_mgt
 
-    if mgt >= n_mgt:
-        raise ValueError(f"MGT {mgt} not instantiated")
+    if link >= n_mgt:
+        raise ValueError(f"Link {link} not instantiated")
     
-    hw.write('tx.csr.ctrl.sel',mgt)
+    hw.write('tx.csr.ctrl.sel',link)
     hw.write('tx.mux.mux.ctrl.detid', detid)
     hw.write('tx.mux.mux.ctrl.crate', crate)
     hw.write('tx.mux.mux.ctrl.slot', slot)
@@ -185,16 +185,16 @@ def mux_config(obj, detid, crate, slot, mgt):
 @main.command("udp-config")
 @click.argument('src_id', type=click.Choice(tx_endpoints.keys()))
 @click.argument('dst_id', type=click.Choice(rx_endpoints.keys()))
-@click.option('-m', '--mgt', type=int, default=0)
+@click.option('-l', '--link', type=int, default=0)
 @click.pass_obj
-def udp_config(obj, src_id, dst_id, mgt):
+def udp_config(obj, src_id, dst_id, link):
     """Comfigure the UDP blocks """
 
 
     n_mgt = obj.n_mgt
 
-    if mgt >= n_mgt:
-        raise ValueError(f"MGT {mgt} not instantiated")
+    if link >= n_mgt:
+        raise ValueError(f"Link {link} not instantiated")
 
 
     hw = obj.hw
@@ -202,7 +202,7 @@ def udp_config(obj, src_id, dst_id, mgt):
     dst = rx_endpoints[dst_id]
     src = tx_endpoints[src_id]
 
-    udp_core_ctrl = f'tx.udp.udp_core_{mgt}.udp_core_control.nz_rst_ctrl'
+    udp_core_ctrl = f'tx.udp.udp_core_{link}.udp_core_control.nz_rst_ctrl'
     hw.write(f'{udp_core_ctrl}.filter_control', 0x07400307)
 
     # Our IP address = 10.73.139.23
@@ -227,11 +227,13 @@ def udp_config(obj, src_id, dst_id, mgt):
     hw.write(f'{udp_core_ctrl}.udp_ports.dst_port', dst['port']) 
 
 
-@main.command("src-config")
-@click.option('-m', '--mgt', type=int, default=0)
-@click.option('-n', '--n-gen', type=click.IntRange(0, MAX_SRCS_P_MGT), default=1)
+@main.command("zcu-src-config")
+@click.option('-l', '--link', type=int, default=0)
+@click.option('-n', '--en-n-src', type=click.IntRange(0, MAX_SRCS_P_MGT), default=1)
+@click.option('-d', '--dlen', type=click.IntRange(0, 0xfff), default=0x382)
+@click.option('-r', '--rate-rdx', type=click.IntRange(0, 0x3f), default=0xa)
 @click.pass_obj
-def src_config(obj, mgt, n_gen):
+def zcu_src_config(obj, link, en_n_src, dlen, rate_rdx):
     """Configure trivial data sources"""
 
     hw = obj.hw
@@ -240,31 +242,70 @@ def src_config(obj, mgt, n_gen):
     n_src = obj.n_src
     n_srcs_p_mgt = n_src//n_mgt
 
-    if mgt >= n_mgt:
-        raise ValueError(f"MGT {mgt} not instantiated")
+    if link >= n_mgt:
+        raise ValueError(f"MGT {link} not instantiated")
     
-    if n_gen > n_srcs_p_mgt:
-        raise ValueError(f"{n_gen} must be lower than the number of generators per mgt ({n_srcs_p_mgt})")
+    if en_n_src > n_srcs_p_mgt:
+        raise ValueError(f"{en_n_src} must be lower than the number of generators per link ({n_srcs_p_mgt})")
 
-    for i in range(n_srcs_p_mgt):
-        gen_id = n_srcs_p_mgt*mgt+i
-        hw.write(f'ctrl.sel', gen_id)
-        gen_en = (i<n_gen)
-        print(f'Configuring generator {gen_id} : {gen_en}')
-        hw.write(f'src.ctrl.en', gen_en)
-        if not gen_en:
+    for src_id in range(n_srcs_p_mgt):
+        hw.write(f'ctrl.sel', src_id)
+        src_en = (src_id<en_n_src)
+        print(f'Configuring generator {src_id} : {src_en}')
+        hw.write(f'src.ctrl.en', src_en)
+        if not src_en:
+            continue
+        ## Number of words per block
+        hw.write(f'src.ctrl.dlen', dlen)
+        ## ????
+        hw.write(f'src.ctrl.rate_rdx', rate_rdx) 
+
+
+
+@main.command("fakesrc-config")
+@click.option('-l', '--link', type=int, default=0)
+@click.option('-n', '--n-src', type=click.IntRange(0, MAX_SRCS_P_MGT), default=1)
+@click.option('-l', '--dlen', type=click.IntRange(0, 0xfff), default=0x382)
+@click.option('-r', '--rate-rdx', type=click.IntRange(0, 0x3f), default=0xa)
+@click.pass_obj
+def src_config(obj, link, n_src, dlen, rate_rdx):
+    """Configure trivial data sources"""
+
+    hw = obj.hw
+
+    n_mgt = obj.n_mgt
+    n_src = obj.n_src
+    n_srcs_p_mgt = n_src//n_mgt
+
+    if link >= n_mgt:
+        raise ValueError(f"MGT {link} not instantiated")
+    
+    if n_src > n_srcs_p_mgt:
+        raise ValueError(f"{n_src} must be lower than the number of generators per link ({n_srcs_p_mgt})")
+
+    for src_id in range(n_srcs_p_mgt):
+        hw.write('tx.csr.ctrl.sel_buf', src_id)
+        was_en = hw.read('tx.csr.ctrl.en_buf')
+        # disable buffer before reconfiguring "or bad things will happen"
+        hw.write('tx.csr.ctrl.en_buf', 0x0)
+
+        src_en = (src_id<n_src)
+        print(f'Configuring generator {src_id} : {src_en}')
+        hw.write(f'tx.buf.ctrl.fake_en', src_en)
+        if not src_en:
             continue
         ## ????
-        hw.write(f'src.ctrl.dlen', 0x382)
+        hw.write(f'tx.buf.ctrl.dlen', dlen)
         ## ????
-        hw.write(f'src.ctrl.rate_rdx', 0xa) 
+        hw.write(f'tx.buf.ctrl.rate_rdx', rate_rdx) 
+        hw.write('tx.csr.ctrl.sel_buf', was_en)
 
 
 @main.command()
 @click.pass_obj
-@click.option('-m', '--mgts', 'sel_mgts', type=click.Choice(mgts_all), multiple=True, default=None)
+@click.option('-l', '--links', 'sel_links', type=click.Choice(mgts_all), multiple=True, default=None)
 @click.option('-s', '--seconds', type=int, default=2)
-def stats(obj, sel_mgts, seconds):
+def stats(obj, sel_links, seconds):
     """Simple program that greets NAME for a total of COUNT times."""
 
     hw = obj.hw
@@ -276,16 +317,16 @@ def stats(obj, sel_mgts, seconds):
     mgts = list(range(n_mgt))
     
     # deal with defaults
-    if not sel_mgts:
-        sel_mgts = mgts
+    if not sel_links:
+        sel_links = mgts
     else:
-        sel_mgts = [int(s) for s in sel_mgts]
+        sel_links = [int(s) for s in sel_links]
 
 
     # Check for existance
-    if not set(sel_mgts).issubset(mgts):
-        print(sel_mgts, mgts)
-        raise ValueError(f"MGTs {set(sel_mgts)-set(mgts)} are not instantiated")
+    if not set(sel_links).issubset(mgts):
+        print(sel_links, mgts)
+        raise ValueError(f"MGTs {set(sel_links)-set(mgts)} are not instantiated")
     
     # mgts = [int(s) for s in (mgts if mgts else [0])]
 
@@ -311,7 +352,7 @@ def stats(obj, sel_mgts, seconds):
 
     n_srcs_p_mgt = n_src//n_mgt
 
-    for i in sel_mgts:
+    for i in sel_links:
         print()
         print()
         print(f'---Reading Tx Mux {i}---')

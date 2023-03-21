@@ -22,6 +22,7 @@
         </node>
         <node id="stat" address="0x1">
             <node id="oflow" mask="0x1"/>
+            <node id="ordy" mask="0x2"/>
             <node id="debug" mask="0xff00"/>
         </node>
     </node>    
