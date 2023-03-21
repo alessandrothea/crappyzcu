@@ -248,9 +248,10 @@ def zcu_src_config(obj, link, en_n_src, dlen, rate_rdx):
     if en_n_src > n_srcs_p_mgt:
         raise ValueError(f"{en_n_src} must be lower than the number of generators per link ({n_srcs_p_mgt})")
 
-    for src_id in range(n_srcs_p_mgt):
+    for i in range(n_srcs_p_mgt):
+        src_id = n_srcs_p_mgt*link+i
         hw.write(f'ctrl.sel', src_id)
-        src_en = (src_id<en_n_src)
+        src_en = (i<en_n_src)
         print(f'Configuring generator {src_id} : {src_en}')
         hw.write(f'src.ctrl.en', src_en)
         if not src_en:
@@ -260,6 +261,20 @@ def zcu_src_config(obj, link, en_n_src, dlen, rate_rdx):
         ## ????
         hw.write(f'src.ctrl.rate_rdx', rate_rdx) 
 
+
+
+    # for i in range(n_srcs_p_mgt):
+    #     gen_id = n_srcs_p_mgt*mgt+i
+    #     hw.write(f'ctrl.sel', gen_id)
+    #     gen_en = (i<n_gen)
+    #     print(f'Configuring generator {gen_id} : {gen_en}')
+    #     hw.write(f'src.ctrl.en', gen_en)
+    #     if not gen_en:
+    #         continue
+    #     ## ????
+    #     hw.write(f'src.ctrl.dlen', 0x382)
+    #     ## ????
+    #     hw.write(f'src.ctrl.rate_rdx', 0xa) 
 
 
 @main.command("fakesrc-config")
