@@ -67,25 +67,24 @@ tx_endpoints = {
     },
     'np04-wib-503-d0': {
         'mac': 0x80d336005254,
-        'ip': 0x0a498b18, # 10.73.139.23
+        'ip': 0x0a498b18, # 10.73.139.24
         'port': 0x4444,
     },
     'np04-wib-503-d1': {
         'mac': 0x80d336005255,
-        'ip': 0x0a498b19, # 10.73.139.23
+        'ip': 0x0a498b19, # 10.73.139.24
         'port': 0x4444,
     }
 }
 
 
-ctrl_hosts = [
-    'np04-zcu-001',
-    'np04-wib-503'
-]
+ctrl_hosts = {
+    'np04-zcu-001' : 'hermes_zcu_v0.9.1_b0',
+    'np04-wib-503' : 'hermes_wib_v0.9.1_b0',
+}
 port = 5556
 # addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_mark3', 'zcu_top.xml')
 # addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_v0.9.0', 'zcu_top.xml')
-addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_v0.9.1_b0', 'zcu_top.xml')
 
 # N_MGT=4
 # N_SRC=8
@@ -102,6 +101,8 @@ class CrappyObj:
 @click.pass_context
 def main(ctx, ctrl_id):
     obj = CrappyObj
+
+    addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', ctrl_hosts[ctrl_id], 'zcu_top.xml')
 
     obj.hw = CrappyHardwareClient(ctrl_id, port, addrtab)
     # print(obj.hw.addrtab)
@@ -319,7 +320,7 @@ def src_config(obj, link, n_src, dlen, rate_rdx):
 @main.command()
 @click.pass_obj
 @click.option('-l', '--links', 'sel_links', type=click.Choice(mgts_all), multiple=True, default=None)
-@click.option('-s', '--seconds', type=int, default=2)
+@click.option('-s', '--seconds', type=int, default=0)
 def stats(obj, sel_links, seconds):
     """Simple program that greets NAME for a total of COUNT times."""
 
