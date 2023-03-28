@@ -163,14 +163,14 @@ int main(int argc, char* argv[]) {
     CrappyHardware hw(axi_base_addr, axi_addr_width);
     uint32_t v;
     v = hw.read_addr(0x0, 0xffffffff);
-    std::cout << "Hermes Magic Number: 0x" << std::hex << v << std::endl;
+    std::cout << "- Hermes Magic Number: 0x" << std::hex << v << std::endl;
 
     zmq::context_t context;
     zmq::socket_t socket(context, ZMQ_REP);
 
 
     socket.bind("tcp://*:"+std::to_string(crappy_port));
-    std::cout << "Crappy Server started on port " << crappy_port << std::endl;
+    std::cout << "CrappyHAL server started on port " << std::dec << crappy_port << std::endl;
 
     for (int i = 0; ; i++) {
 
