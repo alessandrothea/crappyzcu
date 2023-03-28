@@ -1,0 +1,30 @@
+<node description="tx_mux registers" fwinfo="endpoint">
+    <node id="info" address="0x0" fwinfo="endpoint;width=2">
+        <node id="magic" address="0x0"/>
+        <node id="versions" address="0x1" description="Firmware version registers">
+            <node id="design" mask="0xff000000" description="ID for hardware design of board"/>
+            <node id="major" mask="0x00ff0000"/>
+            <node id="minor" mask="0x0000ff00"/>
+            <node id="patch" mask="0x000000ff"/>
+        </node>
+        <node id="generics" address="0x2" description="Block generics">
+            <node id="ref_freq" mask="0x000f0000" description="Ref clock frequency 0=156.25, 1=125"/>
+            <node id="n_mgts" mask="0x0000ff00" description="Number of mgts"/>
+            <node id="n_srcs" mask="0x000000ff" description="Number of sources"/>
+        </node>
+    </node>
+    <node id="csr" address="0x4" description="ctrl/stat register" fwinfo="endpoint;width=0">
+        <node id="ctrl" address="0x0">
+            <node id="sel" mask="0x3"/>
+        </node>
+    </node>    
+    <node id="samp" address="0x8" description="ctrl/stat register" fwinfo="endpoint;width=2">
+        <node id="ctrl" address="0x0">
+            <node id="samp" mask="0x1"/>
+        </node>
+        <node id="samp_ts_l" address="0x2"/>
+        <node id="samp_ts_h" address="0x3"/>
+    </node>
+    <node id="mux" address="0x40" module="file://tx_mux.xml"/>
+    <node id="udp" address="0x200" module="file://slim_tx_path.xml"/>
+</node>

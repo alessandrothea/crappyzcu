@@ -11,6 +11,10 @@ import collections
 
 uhal.setLogLevelTo(uhal.LogLevel.WARNING)
 
+class CrappyServerReplyTimeout(Exception):
+    ""
+    pass
+
 class CrappyRawHardwareClient:
 
     def __init__(self, host: str, port: int):
@@ -18,6 +22,7 @@ class CrappyRawHardwareClient:
         self.port = port
         self.context = None
         self.socket = None
+        self.timeout=1000
 
     def __del__(self):
         self.disconnect()
@@ -34,16 +39,20 @@ class CrappyRawHardwareClient:
 
     def read_addr(self, addr, mask):
 
-        req = {'cmd': 'read', 'addr': hex(addr), 'mask': hex(mask)}
+        req = {'cmd': 'read', 'addr': addr, 'mask': mask}
         self.socket.send(json.dumps(req).encode())
-        message = self.socket.recv()
+        if self.socket.poll(self.timeout, zmq.POLLIN):
+            message = self.socket.recv(zmq.NOBLOCK)
+        else:
+            raise CrappyServerReplyTimeout()
+        # message = self.socket.recv()
         rpl = json.loads(message)
-        # print(f"Received reply {req} [{rpl}]")
+        #print(f"Received reply {req} [{rpl}]")
         return int(rpl['read_val'], 0)
 
 
     def write_addr(self, addr, mask, val):
-        req = {'cmd': 'write', 'addr': hex(addr), 'mask': hex(mask), 'val': hex(val)}
+        req = {'cmd': 'write', 'addr': addr, 'mask': mask, 'val': val}
         self.socket.send(json.dumps(req).encode())
         message = self.socket.recv()
         # print(f"Received reply {req} [{message.decode('utf-8')}]")
@@ -100,47 +109,3 @@ class CrappyHardwareClient(CrappyRawHardwareClient):
         return self.write_addr(addr, mask, val)
 
 
-
-# @click.command()
-# def main():
-
-#     port = "5556"
-# # if len(sys.argv) > 1:
-# #     port =  sys.argv[1]
-# #     int(port)
-
-# # if len(sys.argv) > 2:
-# #     port1 =  sys.argv[2]
-# #     int(port1)
-#     # context = zmq.Context()
-#     # print("Connecting to server...")
-#     # socket = context.socket(zmq.REQ)
-#     # socket.connect (f"tcp://np04-zcu-001:{port}")
-
-
-#     # req = {'cmd': 'read', 'addr': '0x2', 'mask': '0xffffffff'}
-
-#     # #  Do 10 requests, waiting each time for a response
-#     # for request in range (1,10):
-#     #     print(f"Sending request {request}...")
-#     #     socket.send (json.dumps(req).encode())
-#     #     #  Get the reply.
-#     #     message = socket.recv()
-#     #     print(f"Received reply {request} [{message.decode('utf-8')}]")
-
-#     hw =  CrappyRawHardwareClient('np04-zcu-001', port)
-#     hw.connect()
-
-#     v = hw.read_addr(0x2, 0xffffffff)
-#     print(v)
-#     v = hw.write_addr(0x0, 0xffffffff, 0)
-
-
-
-# if __name__ == '__main__':
-#     FORMAT = "%(message)s"
-#     logging.basicConfig(
-#         level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
-#     )
-
-#     main()
