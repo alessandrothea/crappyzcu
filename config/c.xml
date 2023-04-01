@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<connections>
+  <connection id="np04-zcu-001" uri="ipbusudp-2.0://np04-zcu-001:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_zcu_v0.9.1_b0/zcu_top.xml" />
+  <connection id="np04-wib-501" uri="ipbusudp-2.0://np04-wib-501:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b0/tx_mux_wib.xml" />
+  <connection id="np04-wib-502" uri="ipbusudp-2.0://np04-wib-502:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b0/tx_mux_wib.xml" />
+  <connection id="np04-wib-503" uri="ipbusudp-2.0://np04-wib-503:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b0/tx_mux_wib.xml" />
+  <connection id="np04-wib-504" uri="ipbusudp-2.0://np04-wib-504:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b0/tx_mux_wib.xml" />
+  <connection id="np04-wib-505" uri="ipbusudp-2.0://np04-wib-505:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b0/tx_mux_wib.xml" />
+</connections>
