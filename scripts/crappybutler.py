@@ -65,6 +65,33 @@ tx_endpoints = {
         'ip': 0x0a498b17, # 10.73.139.23
         'port': 0x4444,
     },
+
+    ### WIB 501
+    'np04-wib-501-d0': {
+        'mac': 0x80d336005250,
+        'ip': 0x0a498b1e, # 10.73.139.30
+        'port': 0x4444,
+    },
+    'np04-wib-501-d1': {
+        'mac': 0x80d336005251,
+        'ip': 0x0a498b1f, # 10.73.139.31
+        'port': 0x4444,
+    },
+
+    ### WIB 502
+    'np04-wib-502-d0': {
+        'mac': 0x80d336005252,
+        'ip': 0x0a498b20, # 10.73.139.32
+        'port': 0x4444,
+    },
+    'np04-wib-502-d1': {
+        'mac': 0x80d336005253,
+        'ip': 0x0a498b21, # 10.73.139.33
+        'port': 0x4444,
+    },
+
+
+    ### WIB 503
     'np04-wib-503-d0': {
         'mac': 0x80d336005254,
         'ip': 0x0a498b18, # 10.73.139.24
@@ -74,13 +101,42 @@ tx_endpoints = {
         'mac': 0x80d336005255,
         'ip': 0x0a498b19, # 10.73.139.24
         'port': 0x4444,
+    },
+
+
+    ### WIB 504
+    'np04-wib-504-d0': {
+        'mac': 0x80d336005256,
+        'ip': 0x0a498b18, # 10.73.139.34
+        'port': 0x4444,
+    },
+    'np04-wib-504-d1': {
+        'mac': 0x80d336005257,
+        'ip': 0x0a498b19, # 10.73.139.35
+        'port': 0x4444,
+    },
+
+    ### WIB 505
+    'np04-wib-505-d0': {
+        'mac': 0x80d336005258,
+        'ip': 0x0a498b1c, # 10.73.139.28
+        'port': 0x4444,
+    },
+    'np04-wib-505-d1': {
+        'mac': 0x80d336005259,
+        'ip': 0x0a498b1d, # 10.73.139.29
+        'port': 0x4444,
     }
 }
 
 
 ctrl_hosts = {
     'np04-zcu-001' : 'hermes_zcu_v0.9.1_b0',
+    'np04-wib-501' : 'hermes_wib_v0.9.1_b0',
+    'np04-wib-502' : 'hermes_wib_v0.9.1_b0',
     'np04-wib-503' : 'hermes_wib_v0.9.1_b0',
+    'np04-wib-504' : 'hermes_wib_v0.9.1_b0',
+    'np04-wib-505' : 'hermes_wib_v0.9.1_b0',
 }
 port = 5556
 # addrtab = os.path.join(os.environ['CRAPPYZCU_SHARE'], 'config', 'hermes_zcu_mark3', 'zcu_top.xml')
@@ -124,6 +180,36 @@ def main(ctx, ctrl_id):
     obj.ref_freq = ref_freq
 
     ctx.obj = obj
+
+@main.command()
+def addrbook():
+
+    t = Table(title="Control hosts")
+    t.add_column('name')
+    t.add_column('addrtable', style='green')
+    for h,a in ctrl_hosts.items():
+        t.add_row(h, a)
+    print(t)
+
+    t = Table(title="Receivers")
+    t.add_column('name')
+    t.add_column('mac', style='green')
+    t.add_column('ip', style='blue')
+    t.add_column('port', style='blue')
+    for h,d in rx_endpoints.items():
+        t.add_row(h, f"0x{d['mac']:012x}", f"0x{d['ip']:08x}", str(d['port']))
+    print(t)
+
+    t = Table(title="Transmitters")
+    t.add_column('name')
+    t.add_column('mac', style='green')
+    t.add_column('ip', style='blue')
+    t.add_column('port', style='blue')
+    for h,d in tx_endpoints.items():
+        t.add_row(h, f"0x{d['mac']:012x}", f"0x{d['ip']:08x}", str(d['port']))
+    print(t)
+    # print(f"{rx_endpoints}")
+    # print(f"{tx_endpoints}")
 
 @main.command()
 @click.option('--en/--dis', 'enable', default=None)
