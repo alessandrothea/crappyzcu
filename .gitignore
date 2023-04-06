@@ -5,4 +5,4 @@ build
 *.d
 *.o
 crappyhal_srv
-crappy_udp_bridge
+hermes_udp_srv

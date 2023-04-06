@@ -19,7 +19,7 @@ all: $(BINS)
 
 install:
 		install -d "$(DESTDIR)/bin/"
-		install -m 0755 crappyhal_srv "$(DESTDIR)/bin/"
+		install -m 0755 hermes_udp_srv "$(DESTDIR)/bin/"
 
 
 clean:

@@ -3,21 +3,46 @@
 #include "DevMem.hpp"
 #include <iostream>
 #include <iomanip>
+#include <map>
 
 
 // UDP_IP = "10.73.138.70"
 static constexpr uint16_t UDP_PORT = 50001;
-static constexpr size_t AXI_OFFSET = 0x80000000;
-static constexpr size_t AXI_LENGTH = 0x100000;
+// static constexpr size_t AXI_OFFSET = 0x80000000;
+// static constexpr size_t AXI_LENGTH = 0x100000;
 
-static constexpr uint32_t IPB_MB_OFFSET=0x10000;
+static constexpr uint32_t HEADER_FLAG=0x10000;
 
 // mem = devmem.DevMem(AXI_OFFSET, AXI_LENGTH, "/dev/mem", 0)
 
-int main() {
+int main(int argc, char* argv[]) {
 
-    std::cout << " - Mapping memory device at offset " << (void*)AXI_OFFSET << std::endl;
-    devmem::DevMem mem(AXI_OFFSET, AXI_LENGTH);
+    if ( argc != 2 ) {
+        std::cerr << "ERROR: 1 argument expected, " << argc << ", found."<< std::endl;
+        std::cout << "Usage: " << argv[0] << " {wib,zcu102}" << std::endl;
+        exit(1);
+    }
+
+    std::string device = argv[1];
+    std::map<std::string, uint64_t> device_address_map = {
+        {"zcu102", 0x80000000},
+        {"wib", 0xa0020000},
+    };
+    
+
+    std::cout << device << std::endl;
+
+    auto device_it = device_address_map.find(device);
+    if ( device_it == device_address_map.end() ) {
+        std::cerr << "ERROR: device " << device << " unknown."<< std::endl;
+        exit(-1);
+    }
+
+    uint64_t axi_base_addr = device_it->second;
+    uint64_t axi_addr_length = 0x10000;
+
+    std::cout << " - Mapping memory device at offset " << (void*)axi_base_addr << std::endl;
+    devmem::DevMem mem(axi_base_addr, axi_addr_length);
     std::cout << " - Mapping successful" << std::endl;
 
     std::cout << " - IPBus interface status" << std::endl;
@@ -67,7 +92,7 @@ int main() {
         uint32_t next_req_base_addr = word_per_page * next_req_page;
 
         // Prepare header word
-        uint32_t req_hdr_word = (IPB_MB_OFFSET | (data_uint32.size() - 1));
+        uint32_t req_hdr_word = (HEADER_FLAG | (data_uint32.size() - 1));
         mem.write(next_req_base_addr, req_hdr_word);
         mem.write_block(next_req_base_addr+1, data_uint32);
 
@@ -87,7 +112,7 @@ int main() {
 
         // Read the reply size word
         uint32_t rep_hdr_word = mem.read(next_rep_base_addr);
-        uint32_t rep_size = (rep_hdr_word & ~IPB_MB_OFFSET) + 1;
+        uint32_t rep_size = (rep_hdr_word & ~HEADER_FLAG) + 1;
 
         // Read the reply
         auto rep_data = mem.read_block(next_rep_base_addr+1, rep_size);
