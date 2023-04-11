@@ -177,7 +177,7 @@ int main(int argc, const char* argv[]) {
         } catch ( std::runtime_error &e ) {
             std::cerr << "Error: timeout while retrieving reply form ipbus transactor" << std::endl;
             ++to_count;
-            break;
+            continue;
         }
 
          
