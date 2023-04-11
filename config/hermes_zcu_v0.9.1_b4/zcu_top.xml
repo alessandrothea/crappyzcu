@@ -1,0 +1,7 @@
+<node description="zcu_top registers">
+    <node id="tx" address="0x0" module="file://tx_mux_wib.xml"/>
+    <node id="ctrl" address="0x400" fwinfo="endpoint;width=0">
+        <node id="sel" mask="0xf"/>
+    </node>
+    <node id="src" address="0x401" module="file://tx_mux_tb_src.xml"/>
+</node>

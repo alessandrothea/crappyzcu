@@ -10,8 +10,11 @@ from rich import print
 from rich.table import Table
 from rich.logging import RichHandler
 
+from crappyzcu.tx_endpoints import tx_endpoints
+from crappyzcu.rx_endpoints import rx_endpoints
 
-from crappyhalclient import CrappyHardwareClient
+
+# from crappyhalclient import CrappyHardwareClient
 
 # -----------------------------------------------------------------------------
 # Utilities
@@ -102,9 +105,12 @@ class HermesController :
 
         if i >= self.n_mgt:
             raise ValueError(f"Link {i} does not exist ({self.n_mgt})")
-    
-        self.node.getNode('csr.ctrl.sel').write(i)
-        self.node.getClient().dispatch()
+
+        self.get_node('csr.ctrl.sel').write(i)
+        self.dispatch()
+        j = self.get_node('csr.ctrl.sel').read()
+        self.dispatch()
+        print(f"Link {j} selected")
 
 
     def sel_tx_mux_buf(self, i: int):
@@ -118,109 +124,132 @@ class HermesController :
     
 
 # -----------------------------------------------------------------------------
-rx_endpoints = {
-    'np02-srv-001:priv': {
-        'mac': 0xd85ed38cc4e3,
-        'ip': 0xc0a80201, # 192.168.2.1
-        'port': 0x4444,
-    },
-    'np02-srv-001-100G': {
-        'mac': 0x6cfe5447a128,
-        'ip': 0x0a498b16, # 10.73.139.22
-        'port': 0x4444,
-    },
-    'np04-srv-021-100G': {
-        'mac': 0xec0d9a8eba10,
-        'ip': 0x0a49883c, # 10.73.139.16
-        'port': 0x4444,
-    },
-}
+# rx_endpoints = {
+#     'np02-srv-001:priv': {
+#         'mac': 0xd85ed38cc4e3,
+#         'ip': 0xc0a80201, # 192.168.2.1
+#         'port': 0x4444,
+#     },
+#     'np02-srv-001-100G': {
+#         'mac': 0x6cfe5447a128,
+#         'ip': 0x0a498b16, # 10.73.139.22
+#         'port': 0x4444,
+#     },
+#     'np04-srv-021-100G': {
+#         'mac': 0xec0d9a8eba10,
+#         'ip': 0x0a49883c, # 10.73.139.16
+#         'port': 0x4444,
+#     },
+# }
 
-tx_endpoints = {
-    'np04-zcu-001:priv': {
-        'mac': 0x000a3504b5f7,
-        'ip': 0xc0a80202, # 192.168.2.2
-        'port': 0x4444,
-    },
-    'np04-zcu-001-10G': {
-        'mac': 0x80d3360052ff,
-        'ip': 0x0a498b17, # 10.73.139.23
-        'port': 0x4444,
-    },
+# tx_endpoints = {
+#     'np04-zcu-001:priv': {
+#         'mac': 0x000a3504b5f7,
+#         'ip': 0xc0a80202, # 192.168.2.2
+#         'port': 0x4444,
+#     },
+#     'np04-zcu-001-10G': {
+#         'mac': 0x80d3360052ff,
+#         'ip': 0x0a498b17, # 10.73.139.23
+#         'port': 0x4444,
+#     },
 
-    ### WIB 501
-    'np04-wib-501-d0': {
-        'mac': 0x80d336005250,
-        'ip': 0x0a498b1e, # 10.73.139.30
-        'port': 0x4444,
-    },
-    'np04-wib-501-d1': {
-        'mac': 0x80d336005251,
-        'ip': 0x0a498b1f, # 10.73.139.31
-        'port': 0x4444,
-    },
+#     ### WIB 301
+#     'np04-wib-301-d0': {
+#         'mac': 0x80d336005230,
+#         'ip': 0x0a498b26, # 10.73.139.38
+#         'port': 0x4444,
+#     },
+#     'np04-wib-301-d1': {
+#         'mac': 0x80d336005231,
+#         'ip': 0x0a498b27, # 10.73.139.39
+#         'port': 0x4444,
+#     },
+    
+#     ### WIB 501
+#     'np04-wib-501-d0': {
+#         'mac': 0x80d336005250,
+#         'ip': 0x0a498b1e, # 10.73.139.30
+#         'port': 0x4444,
+#     },
+#     'np04-wib-501-d1': {
+#         'mac': 0x80d336005251,
+#         'ip': 0x0a498b1f, # 10.73.139.31
+#         'port': 0x4444,
+#     },
 
-    ### WIB 502
-    'np04-wib-502-d0': {
-        'mac': 0x80d336005252,
-        'ip': 0x0a498b20, # 10.73.139.32
-        'port': 0x4444,
-    },
-    'np04-wib-502-d1': {
-        'mac': 0x80d336005253,
-        'ip': 0x0a498b21, # 10.73.139.33
-        'port': 0x4444,
-    },
-
-
-    ### WIB 503
-    'np04-wib-503-d0': {
-        'mac': 0x80d336005254,
-        'ip': 0x0a498b18, # 10.73.139.24
-        'port': 0x4444,
-    },
-    'np04-wib-503-d1': {
-        'mac': 0x80d336005255,
-        'ip': 0x0a498b19, # 10.73.139.24
-        'port': 0x4444,
-    },
-
-
-    ### WIB 504
-    'np04-wib-504-d0': {
-        'mac': 0x80d336005256,
-        'ip': 0x0a498b18, # 10.73.139.34
-        'port': 0x4444,
-    },
-    'np04-wib-504-d1': {
-        'mac': 0x80d336005257,
-        'ip': 0x0a498b19, # 10.73.139.35
-        'port': 0x4444,
-    },
-
-    ### WIB 505
-    'np04-wib-505-d0': {
-        'mac': 0x80d336005258,
-        'ip': 0x0a498b1c, # 10.73.139.28
-        'port': 0x4444,
-    },
-    'np04-wib-505-d1': {
-        'mac': 0x80d336005259,
-        'ip': 0x0a498b1d, # 10.73.139.29
-        'port': 0x4444,
-    }
-}
+#     ### WIB 502
+#     'np04-wib-502-d0': {
+#         'mac': 0x80d336005252,
+#         'ip': 0x0a498b20, # 10.73.139.32
+#         'port': 0x4444,
+#     },
+#     'np04-wib-502-d1': {
+#         'mac': 0x80d336005253,
+#         'ip': 0x0a498b21, # 10.73.139.33
+#         'port': 0x4444,
+#     },
 
 
-ctrl_hosts = {
-    'np04-zcu-001' : 'hermes_zcu_v0.9.1_b0',
-    'np04-wib-501' : 'hermes_wib_v0.9.1_b0',
-    'np04-wib-502' : 'hermes_wib_v0.9.1_b0',
-    'np04-wib-503' : 'hermes_wib_v0.9.1_b0',
-    'np04-wib-504' : 'hermes_wib_v0.9.1_b0',
-    'np04-wib-505' : 'hermes_wib_v0.9.1_b0',
-}
-port = 5556
+#     ### WIB 503
+#     'np04-wib-503-d0': {
+#         'mac': 0x80d336005254,
+#         'ip': 0x0a498b18, # 10.73.139.24
+#         'port': 0x4444,
+#     },
+#     'np04-wib-503-d1': {
+#         'mac': 0x80d336005255,
+#         'ip': 0x0a498b19, # 10.73.139.24
+#         'port': 0x4444,
+#     },
+
+
+#     ### WIB 504
+#     'np04-wib-504-d0': {
+#         'mac': 0x80d336005256,
+#         'ip': 0x0a498b18, # 10.73.139.34
+#         'port': 0x4444,
+#     },
+#     'np04-wib-504-d1': {
+#         'mac': 0x80d336005257,
+#         'ip': 0x0a498b19, # 10.73.139.35
+#         'port': 0x4444,
+#     },
+
+#     ### WIB 505
+#     'np04-wib-505-d0': {
+#         'mac': 0x80d336005258,
+#         'ip': 0x0a498b1c, # 10.73.139.28
+#         'port': 0x4444,
+#     },
+#     'np04-wib-505-d1': {
+#         'mac': 0x80d336005259,
+#         'ip': 0x0a498b1d, # 10.73.139.29
+#         'port': 0x4444,
+#     }
+# }
+
+
+ctrl_hosts = [
+    'np04-zcu-001',
+    'np04-wib-301',
+    'np04-wib-302',
+    'np04-wib-303',
+    'np04-wib-304',
+    'np04-wib-305',
+
+    'np04-wib-401',
+    'np04-wib-402',
+    'np04-wib-403',
+    'np04-wib-404',
+    'np04-wib-405',
+    
+    'np04-wib-501',
+    'np04-wib-502',
+    'np04-wib-503',
+    'np04-wib-504',
+    'np04-wib-505',
+]
 
 # N_MGT=4
 # N_SRC=8
@@ -238,6 +267,7 @@ class CrappyObj:
 def cli(ctx, ctrl_id):
     obj = CrappyObj
 
+    uhal.setLogLevelTo(uhal.LogLevel.WARNING)
 
     cm  = uhal.ConnectionManager('file://${CRAPPYZCU_SHARE}/config/c.xml')
     hw = cm.getDevice(ctrl_id)
@@ -247,12 +277,15 @@ def cli(ctx, ctrl_id):
     is_wib = hw.getNodes('info')
 
     if is_zcu:
+        print("zcu mode")
         tx_mux = hw.getNode('tx')
     elif is_wib:
+        print("wib mode")
         tx_mux = hw.getNode()
     else:
         raise ValueError(f"{ctrl_id} is neither a zcu nor a wib")
 
+    obj.hw = hw
     obj.hermes = HermesController(tx_mux)
 
     ctx.obj = obj
@@ -285,6 +318,32 @@ def addrbook():
         t.add_row(h, f"0x{d['mac']:012x}", f"0x{d['ip']:08x}", str(d['port']))
     print(t)
 
+
+@cli.command()
+@click.option('--nuke', is_flag=True, default=None)
+@click.pass_obj
+def reset(obj, nuke):
+
+    hrms = obj.hermes
+
+    if nuke is not None:        
+        hrms.get_node('csr.ctrl.nuke').write(0x1)
+        hrms.dispatch()
+
+        time.sleep(0.1)
+
+        hrms.get_node('csr.ctrl.nuke').write(0x0)
+        hrms.dispatch()
+    
+    hrms.get_node('csr.ctrl.soft_rst').write(0x1)
+    hrms.dispatch()
+
+    time.sleep(0.1)
+
+    hrms.get_node('csr.ctrl.soft_rst').write(0x0)
+    hrms.dispatch()
+
+
 @cli.command()
 @click.option('--en/--dis', 'enable', default=None)
 @click.option('--buf-en/--buf-dis', 'buf_en', default=None)
@@ -303,18 +362,26 @@ def enable(obj, enable, buf_en, tx_en, link):
     hrms.sel_tx_mux(link)
 
     print()
+
+    tx_en = tx_en if tx_en is not None else enable
+    buf_en = buf_en if buf_en is not None else enable
+
+    if tx_en is not None:
+        print(f"- {'Enabling' if tx_en else 'Disabling'} 'tx block'")
+        hrms.get_node('mux.csr.ctrl.tx_en').write(tx_en)
+    print()
+
+    if buf_en :
+        print(f"- {'Enabling' if buf_en else 'Disabling'} 'input buffers'")
+        hrms.get_node('mux.csr.ctrl.en_buf').write(buf_en)
+
+    time.sleep(0.1)
+
     if enable is not None:
         print(f"- {'Enabling' if enable else 'Disabling'} 'mux'")
         hrms.get_node('mux.csr.ctrl.en').write(enable)
 
-    if buf_en is not None:
-        print(f"- {'Enabling' if buf_en else 'Disabling'} 'input buffers'")
-        hrms.get_node('mux.csr.ctrl.en_buf').write(buf_en)
 
-    if tx_en is not None:
-        print(f"- {'Enabling' if tx_en else 'Disabling'} 'tx block'")
-        hrms.get_node('mux.csr.ctrl.en_buf').write(tx_en)
-    print()
     
     hrms.dispatch()
 
@@ -337,9 +404,6 @@ def mux_config(obj, detid, crate, slot, link):
 
     hrms = obj.hermes
 
-    if link >= hrms.n_mgt:
-        raise ValueError(f"Link {link} not instantiated")
-    
     hrms.sel_tx_mux(link)
 
     hrms.get_node('mux.mux.ctrl.detid').write(detid)
@@ -368,8 +432,6 @@ def udp_config(obj, src_id, dst_id, link):
         raise ValueError(f"Link {link} not instantiated")
 
 
-    # hw = obj.hw
-
     dst = rx_endpoints[dst_id]
     src = tx_endpoints[src_id]
 
@@ -378,26 +440,26 @@ def udp_config(obj, src_id, dst_id, link):
     hrms.get_node(f'{udp_core_ctrl}.filter_control').write(filter_control)
 
     # Our IP address = 10.73.139.23
-    print(f"Our ip address: {socket.inet_ntoa(src['ip'].to_bytes(4, 'big'))}")
-    hrms.get_node(f'{udp_core_ctrl}.src_ip_addr').write(src['ip']) 
+    # print(f"Our ip address: {socket.inet_ntoa(src['ip'].to_bytes(4, 'big'))}")
+    src_u32 = int.from_bytes(socket.inet_aton(src['ip']),"big")
+    print(f"Our ip address: {src['ip']} (0x{src_u32:08x})")
+    
+    hrms.get_node(f'{udp_core_ctrl}.src_ip_addr').write(src_u32) 
 
     # Their IP address = 10.73.139.23
-    print(f"Their ip address: {socket.inet_ntoa(dst['ip'].to_bytes(4, 'big'))}")
-    # hw.write(f'{udp_core_ctrl}.dst_ip_addr', dst['ip']) 
-    hrms.get_node(f'{udp_core_ctrl}.dst_ip_addr').write(dst['ip']) 
+    # print(f"Their ip address: {socket.inet_ntoa(dst['ip'].to_bytes(4, 'big'))}")
+    dst_u32 = int.from_bytes(socket.inet_aton(dst['ip']),"big")
+    print(f"Their ip address: {src['ip']} (0x{dst_u32:08x})")
+    hrms.get_node(f'{udp_core_ctrl}.dst_ip_addr').write(dst_u32) 
     
     # Our MAC address
     # Dest MAC address
     print(f"Our mac address: 0x{src['mac']:012x}")
-    # hw.write(f'{udp_core_ctrl}.src_mac_addr_lower', src['mac'] & 0xffffffff) 
-    # hw.write(f'{udp_core_ctrl}.src_mac_addr_upper', (src['mac'] >> 32) & 0xffff) 
     hrms.get_node(f'{udp_core_ctrl}.src_mac_addr_lower').write(src['mac'] & 0xffffffff) 
     hrms.get_node(f'{udp_core_ctrl}.src_mac_addr_upper').write((src['mac'] >> 32) & 0xffff) 
 
     # Dest MAC address
     print(f"Their mac address: 0x{dst['mac']:012x}")
-    # hw.write(f'{udp_core_ctrl}.dst_mac_addr_lower', dst['mac'] & 0xffffffff) 
-    # hw.write(f'{udp_core_ctrl}.dst_mac_addr_upper', (dst['mac'] >> 32) & 0xffff) 
     hrms.get_node(f'{udp_core_ctrl}.dst_mac_addr_lower').write(dst['mac'] & 0xffffffff) 
     hrms.get_node(f'{udp_core_ctrl}.dst_mac_addr_upper').write((dst['mac'] >> 32) & 0xffff) 
 
@@ -411,97 +473,108 @@ def udp_config(obj, src_id, dst_id, link):
 @cli.command("zcu-src-config")
 @click.option('-l', '--link', type=int, default=0)
 @click.option('-n', '--en-n-src', type=click.IntRange(0, MAX_SRCS_P_MGT), default=1)
-@click.option('-d', '--dlen', type=click.IntRange(0, 0xfff), default=0x382)
+@click.option('-d', '--dlen', type=click.IntRange(0, 0xfff), default=0x383)
 @click.option('-r', '--rate-rdx', type=click.IntRange(0, 0x3f), default=0xa)
 @click.pass_obj
 def zcu_src_config(obj, link, en_n_src, dlen, rate_rdx):
     """Configure trivial data sources"""
 
     hw = obj.hw
+    hrms = obj.hermes
+    
+    # n_mgt = obj.n_mgt
+    # n_src = obj.n_src
+    # n_srcs_p_mgt = n_src//n_mgt
 
-    n_mgt = obj.n_mgt
-    n_src = obj.n_src
-    n_srcs_p_mgt = n_src//n_mgt
-
-    if link >= n_mgt:
+    if link >= hrms.n_mgt:
         raise ValueError(f"MGT {link} not instantiated")
     
-    if en_n_src > n_srcs_p_mgt:
-        raise ValueError(f"{en_n_src} must be lower than the number of generators per link ({n_srcs_p_mgt})")
+    if en_n_src > hrms.n_srcs_p_mgt:
+        raise ValueError(f"{en_n_src} must be lower than the number of generators per link ({hrms.n_srcs_p_mgt})")
 
-    for i in range(n_srcs_p_mgt):
-        src_id = n_srcs_p_mgt*link+i
-        hw.write(f'ctrl.sel', src_id)
+    for i in range(hrms.n_srcs_p_mgt):
+        src_id = hrms.n_srcs_p_mgt*link+i
+        hw.getNode('ctrl.sel').write(src_id)
         src_en = (i<en_n_src)
         print(f'Configuring generator {src_id} : {src_en}')
-        hw.write(f'src.ctrl.en', src_en)
+        hw.getNode('src.ctrl.en').write(src_en)
         if not src_en:
             continue
         ## Number of words per block
-        hw.write(f'src.ctrl.dlen', dlen)
+        hw.getNode('src.ctrl.dlen').write(dlen)
         ## ????
-        hw.write(f'src.ctrl.rate_rdx', rate_rdx) 
+        hw.getNode('src.ctrl.rate_rdx').write(rate_rdx) 
+        hw.dispatch()
 
 
+    regs = {}
+    for i in range(hrms.n_src):
+        hw.getNode('ctrl.sel').write(i)
 
-    # for i in range(n_srcs_p_mgt):
-    #     gen_id = n_srcs_p_mgt*mgt+i
-    #     hw.write(f'ctrl.sel', gen_id)
-    #     gen_en = (i<n_gen)
-    #     print(f'Configuring generator {gen_id} : {gen_en}')
-    #     hw.write(f'src.ctrl.en', gen_en)
-    #     if not gen_en:
-    #         continue
-    #     ## ????
-    #     hw.write(f'src.ctrl.dlen', 0x382)
-    #     ## ????
-    #     hw.write(f'src.ctrl.rate_rdx', 0xa) 
+        regs[i] =  dump_sub_regs(hw.getNode('src.ctrl'))
 
+    # Create the summary table
+    t = Table()
+
+    # Add 1 column for the reg name, and as many as the number of sources
+    t.add_column('name')
+    for j in range(hrms.n_src):
+        t.add_column(f'Src {j}', style='green')
+
+    for n in hw.getNode('src.ctrl').getNodes():
+        t.add_row(n, *[hex(regs[i][n]) for i in range(hrms.n_src)])
+
+    
+    print(t)
 
 @cli.command("fakesrc-config")
 @click.option('-l', '--link', type=int, default=0)
 @click.option('-n', '--n-src', type=click.IntRange(0, MAX_SRCS_P_MGT), default=1)
-@click.option('-l', '--dlen', type=click.IntRange(0, 0xfff), default=0x382)
+@click.option('-k', '--data-len', type=click.IntRange(0, 0xfff), default=0x383)
 @click.option('-r', '--rate-rdx', type=click.IntRange(0, 0x3f), default=0xa)
 @click.pass_obj
-def src_config(obj, link, n_src, dlen, rate_rdx):
+def fakesrc_config(obj, link, n_src, data_len, rate_rdx):
     """Configure trivial data sources"""
 
-    hw = obj.hw
+    hrms = obj.hermes
 
-    n_mgt = obj.n_mgt
-    n_src = obj.n_src
-    n_srcs_p_mgt = n_src//n_mgt
+    hrms.sel_tx_mux(link)
 
-    if link >= n_mgt:
-        raise ValueError(f"MGT {link} not instantiated")
-    
-    if n_src > n_srcs_p_mgt:
+    if n_src > hrms.n_srcs_p_mgt:
         raise ValueError(f"{n_src} must be lower than the number of generators per link ({n_srcs_p_mgt})")
 
-    for src_id in range(n_srcs_p_mgt):
-        hw.write('tx.csr.ctrl.sel_buf', src_id)
-        was_en = hw.read('tx.csr.ctrl.en_buf')
-        # disable buffer before reconfiguring "or bad things will happen"
-        hw.write('tx.csr.ctrl.en_buf', 0x0)
+    was_en = hrms.get_node('mux.csr.ctrl.en_buf').read()
+    # disable buffer before reconfiguring "or bad things will happen"
+    hrms.get_node('mux.csr.ctrl.en_buf').write(0x0)
+    hrms.dispatch()
+    
+    for src_id in range(hrms.n_srcs_p_mgt):
+        hrms.sel_tx_mux_buf(src_id)
 
         src_en = (src_id<n_src)
         print(f'Configuring generator {src_id} : {src_en}')
-        hw.write(f'tx.buf.ctrl.fake_en', src_en)
+        # hw.write(f'tx.buf.ctrl.fake_en', src_en)
+        hrms.get_node('mux.buf.ctrl.fake_en').write(src_en)
         if not src_en:
             continue
         ## ????
-        hw.write(f'tx.buf.ctrl.dlen', dlen)
+        hrms.get_node('mux.buf.ctrl.dlen').write(data_len)
         ## ????
-        hw.write(f'tx.buf.ctrl.rate_rdx', rate_rdx) 
-        hw.write('tx.csr.ctrl.sel_buf', was_en)
+        hrms.get_node('mux.buf.ctrl.rate_rdx').write(rate_rdx) 
+        hrms.dispatch()
+
+    hrms.get_node('mux.csr.ctrl.en_buf').write(was_en.value())
+    hrms.dispatch()
 
 
 @cli.command()
 @click.pass_obj
 @click.option('-l', '--links', 'sel_links', type=click.Choice(mgts_all), multiple=True, default=None)
 @click.option('-s', '--seconds', type=int, default=0)
-def stats(obj, sel_links, seconds):
+@click.option('-u/-U', '--show-udp/--hide-udp', 'show_udp', default=True)
+@click.option('-b/-B', '--show-buf/--hide-buf', 'show_buf', default=True)
+
+def stats(obj, sel_links, seconds, show_udp, show_buf):
     """Simple program that greets NAME for a total of COUNT times."""
 
     hrms = obj.hermes
@@ -554,71 +627,73 @@ def stats(obj, sel_links, seconds):
         print(grid)
         
 
-        ctrl_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.nz_rst_ctrl'))
-        ctrl_flt_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.nz_rst_ctrl.filter_control'))
-        stat_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.packet_counters'))
+        if show_udp:
+            ctrl_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.nz_rst_ctrl'))
+            ctrl_flt_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.nz_rst_ctrl.filter_control'))
+            stat_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.packet_counters'))
 
 
-        ctrl_srcdst = {}
-        ctrl_srcdst['src_ip'] = ctrl_udp['src_ip_addr']
-        ctrl_srcdst['dst_ip'] = ctrl_udp['dst_ip_addr']
-        ctrl_srcdst['src_mac'] = (ctrl_udp['src_mac_addr_upper.upper'] << 32) + ctrl_udp['src_mac_addr_lower']
-        ctrl_srcdst['dst_mac'] = (ctrl_udp['dst_mac_addr_upper.upper'] << 32) + ctrl_udp['src_mac_addr_lower']
-        ctrl_srcdst['src_port'] = ctrl_udp['udp_ports.src_port']
-        ctrl_srcdst['dst_port'] = ctrl_udp['udp_ports.dst_port']
+            ctrl_srcdst = {}
+            ctrl_srcdst['src_ip'] = ctrl_udp['src_ip_addr']
+            ctrl_srcdst['dst_ip'] = ctrl_udp['dst_ip_addr']
+            ctrl_srcdst['src_mac'] = (ctrl_udp['src_mac_addr_upper.upper'] << 32) + ctrl_udp['src_mac_addr_lower']
+            ctrl_srcdst['dst_mac'] = (ctrl_udp['dst_mac_addr_upper.upper'] << 32) + ctrl_udp['src_mac_addr_lower']
+            ctrl_srcdst['src_port'] = ctrl_udp['udp_ports.src_port']
+            ctrl_srcdst['dst_port'] = ctrl_udp['udp_ports.dst_port']
 
-        grid = Table.grid()
-        grid.add_column("ctrl")
-        grid.add_column("stat")
-        grid.add_row(
-            # dict_to_table(ctrl_udp, title="udp ctrl", show_header=False),
-            dict_to_table(ctrl_srcdst, title="udp src/dst", show_header=False),
-            dict_to_table(ctrl_flt_udp, title="udp filter", show_header=False),
-            dict_to_table(stat_udp, title="udp stat", show_header=False),
-        )
-        print(grid)
+            grid = Table.grid()
+            grid.add_column("ctrl")
+            grid.add_column("stat")
+            grid.add_row(
+                # dict_to_table(ctrl_udp, title="udp ctrl", show_header=False),
+                dict_to_table(ctrl_srcdst, title="udp src/dst", show_header=False),
+                dict_to_table(ctrl_flt_udp, title="udp filter", show_header=False),
+                dict_to_table(stat_udp, title="udp stat", show_header=False),
+            )
+            print(grid)
 
-        ibuf_stats = {}
+        if show_buf:
+            ibuf_stats = {}
 
-        src_ids = tuple(range(hrms.n_srcs_p_mgt))
-        for j in src_ids:
-            # hw.write('tx.mux.csr.ctrl.sel_buf',j)
-            hrms.sel_tx_mux_buf(j)
-            s =  dump_sub_regs(hrms.get_node('mux.buf'))
-            s['blk_acc'] = (s['blk_acc_h']<<32)+s['blk_acc_l']
-            s['blk_oflow'] = (s['blk_oflow_h']<<32)+s['blk_oflow_l']
-            s['blk_rej'] = (s['blk_rej_h']<<32)+s['blk_rej_l']
-            s['ts'] = (s['ts_h']<<32)+s['ts_l']
-            s['vol'] = (s['vol_h']<<32)+s['vol_l']
+            src_ids = tuple(range(hrms.n_srcs_p_mgt))
+            for j in src_ids:
+                # hw.write('tx.mux.csr.ctrl.sel_buf',j)
+                hrms.sel_tx_mux_buf(j)
+                s =  dump_sub_regs(hrms.get_node('mux.buf'))
+                s['blk_acc'] = (s['blk_acc_h']<<32)+s['blk_acc_l']
+                s['blk_oflow'] = (s['blk_oflow_h']<<32)+s['blk_oflow_l']
+                s['blk_rej'] = (s['blk_rej_h']<<32)+s['blk_rej_l']
+                s['ts'] = (s['ts_h']<<32)+s['ts_l']
+                s['vol'] = (s['vol_h']<<32)+s['vol_l']
 
-            for k in tuple(s.keys()):
-                for n in ('blk_acc_', 'blk_oflow_', 'blk_rej_', 'ts_', 'vol_'):
-                    if k.startswith(n):
-                        del s[k]
+                for k in tuple(s.keys()):
+                    for n in ('blk_acc_', 'blk_oflow_', 'blk_rej_', 'ts_', 'vol_'):
+                        if k.startswith(n):
+                            del s[k]
 
-            for k in ('ctrl', 'stat', 'buf_mon'):
-                del s[k]
+                for k in ('ctrl', 'stat', 'buf_mon'):
+                    del s[k]
 
-                
-            ibuf_stats[j] = s
+                    
+                ibuf_stats[j] = s
 
-        # Create the summary table
-        t = Table()
+            # Create the summary table
+            t = Table()
 
-        # Add 1 column for the reg name, and as many as the number of sources
-        t.add_column('name')
-        for j in src_ids:
-            t.add_column(f'Buf {j}', style='green')
+            # Add 1 column for the reg name, and as many as the number of sources
+            t.add_column('name')
+            for j in src_ids:
+                t.add_column(f'Buf {j}', style='green')
 
-        # Unify the reg list (useless?)
-        reg_names = set()
-        for k,v in ibuf_stats.items():
-            reg_names = reg_names.union(v.keys())
-        
-        for n in sorted(reg_names):
-            t.add_row(n,*(hex(ibuf_stats[j][n]) for j in src_ids))
-        print(t)
-        
+            # Unify the reg list (useless?)
+            reg_names = set()
+            for k,v in ibuf_stats.items():
+                reg_names = reg_names.union(v.keys())
+            
+            for n in sorted(reg_names):
+                t.add_row(n,*(hex(ibuf_stats[j][n]) for j in src_ids))
+            print(t)
+            
 
 if __name__ == '__main__':
     FORMAT = "%(message)s"

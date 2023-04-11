@@ -66,6 +66,31 @@ tx_endpoints = {
         'port': 0x4444,
     },
 
+
+    ### WIB 301
+    'np04-wib-301-d0': {
+        'mac': 0x80d336005230,
+        'ip': 0x0a498b26, # 10.73.139.38
+        'port': 0x4444,
+    },
+    'np04-wib-301-d1': {
+        'mac': 0x80d336005231,
+        'ip': 0x0a498b27, # 10.73.139.39
+        'port': 0x4444,
+    },
+
+    ### WIB 401
+    'np04-wib-401-d0': {
+        'mac': 0x80d336005240,
+        'ip': 0x0a498b30, # 10.73.139.48
+        'port': 0x4444,
+    },
+    'np04-wib-401-d1': {
+        'mac': 0x80d336005241,
+        'ip': 0x0a498b31, # 10.73.139.49
+        'port': 0x4444,
+    },
+
     ### WIB 501
     'np04-wib-501-d0': {
         'mac': 0x80d336005250,
@@ -99,7 +124,7 @@ tx_endpoints = {
     },
     'np04-wib-503-d1': {
         'mac': 0x80d336005255,
-        'ip': 0x0a498b19, # 10.73.139.24
+        'ip': 0x0a498b19, # 10.73.139.25
         'port': 0x4444,
     },
 
@@ -132,6 +157,9 @@ tx_endpoints = {
 
 ctrl_hosts = {
     'np04-zcu-001' : 'hermes_zcu_v0.9.1_b0',
+    'np04-wib-301' : 'hermes_wib_v0.9.1_b0',
+    'np04-wib-302' : 'hermes_wib_v0.9.1_b0',
+    'np04-wib-401' : 'hermes_wib_v0.9.1_b0',
     'np04-wib-501' : 'hermes_wib_v0.9.1_b0',
     'np04-wib-502' : 'hermes_wib_v0.9.1_b0',
     'np04-wib-503' : 'hermes_wib_v0.9.1_b0',
@@ -367,40 +395,41 @@ def zcu_src_config(obj, link, en_n_src, dlen, rate_rdx):
 @main.command("fakesrc-config")
 @click.option('-l', '--link', type=int, default=0)
 @click.option('-n', '--n-src', type=click.IntRange(0, MAX_SRCS_P_MGT), default=1)
-@click.option('-l', '--dlen', type=click.IntRange(0, 0xfff), default=0x382)
+@click.option('-k', '--dlen', type=click.IntRange(0, 0xfff), default=0x382)
 @click.option('-r', '--rate-rdx', type=click.IntRange(0, 0x3f), default=0xa)
 @click.pass_obj
-def src_config(obj, link, n_src, dlen, rate_rdx):
+def fakesrc_config(obj, link, n_src, dlen, rate_rdx):
     """Configure trivial data sources"""
 
     hw = obj.hw
 
-    n_mgt = obj.n_mgt
-    n_src = obj.n_src
-    n_srcs_p_mgt = n_src//n_mgt
+    # n_mgt = obj.n_mgt
+    # n_src = obj.n_src
+    n_srcs_p_mgt = obj.n_src//obj.n_mgt
 
-    if link >= n_mgt:
+    if link >= obj.n_mgt:
         raise ValueError(f"MGT {link} not instantiated")
     
     if n_src > n_srcs_p_mgt:
         raise ValueError(f"{n_src} must be lower than the number of generators per link ({n_srcs_p_mgt})")
 
+    hw.write('tx.csr.ctrl.sel',link)
+    was_en = hw.read('tx.mux.csr.ctrl.en_buf')
+    hw.write('tx.mux.csr.ctrl.en_buf',0x0)
+
     for src_id in range(n_srcs_p_mgt):
-        hw.write('tx.csr.ctrl.sel_buf', src_id)
-        was_en = hw.read('tx.csr.ctrl.en_buf')
-        # disable buffer before reconfiguring "or bad things will happen"
-        hw.write('tx.csr.ctrl.en_buf', 0x0)
+        hw.write('tx.mux.csr.ctrl.sel_buf', src_id)
 
         src_en = (src_id<n_src)
         print(f'Configuring generator {src_id} : {src_en}')
-        hw.write(f'tx.buf.ctrl.fake_en', src_en)
+        hw.write(f'tx.mux.buf.ctrl.fake_en', src_en)
         if not src_en:
             continue
         ## ????
-        hw.write(f'tx.buf.ctrl.dlen', dlen)
+        hw.write(f'tx.mux.buf.ctrl.dlen', dlen)
         ## ????
-        hw.write(f'tx.buf.ctrl.rate_rdx', rate_rdx) 
-        hw.write('tx.csr.ctrl.sel_buf', was_en)
+        hw.write(f'tx.mux.buf.ctrl.rate_rdx', rate_rdx) 
+    hw.write('tx.mux.csr.ctrl.en_buf', was_en)
 
 
 @main.command()
@@ -499,6 +528,7 @@ def stats(obj, sel_links, seconds):
         )
         print(grid)
 
+        continue
 
         d = {}
         src_ids = tuple(range(n_srcs_p_mgt))

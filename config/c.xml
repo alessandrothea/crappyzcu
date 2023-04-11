@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <connections>
-  <connection id="np04-zcu-001" uri="ipbusudp-2.0://np04-zcu-001:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_zcu_v0.9.1_b0/zcu_top.xml" />
-  <connection id="np04-wib-501" uri="ipbusudp-2.0://np04-wib-501:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b0/tx_mux_wib.xml" />
+  <connection id="np04-zcu-001" uri="ipbusudp-2.0://np04-zcu-001:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_zcu_v0.9.1_b4/zcu_top.xml" />
+
+  <connection id="np04-wib-301" uri="ipbusudp-2.0://np04-wib-301:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b4/tx_mux_wib.xml" />
+  <connection id="np04-wib-302" uri="ipbusudp-2.0://np04-wib-302:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b4/tx_mux_wib.xml" />
+  <connection id="np04-wib-303" uri="ipbusudp-2.0://np04-wib-303:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b4/tx_mux_wib.xml" />
+  <connection id="np04-wib-304" uri="ipbusudp-2.0://np04-wib-304:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b4/tx_mux_wib.xml" />
+  <connection id="np04-wib-305" uri="ipbusudp-2.0://np04-wib-305:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b4/tx_mux_wib.xml" />
+
+  <connection id="np04-wib-401" uri="ipbusudp-2.0://np04-wib-401:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b4/tx_mux_wib.xml" />
+  <connection id="np04-wib-402" uri="ipbusudp-2.0://np04-wib-402:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b4/tx_mux_wib.xml" />
+  <connection id="np04-wib-403" uri="ipbusudp-2.0://np04-wib-403:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b4/tx_mux_wib.xml" />
+  <connection id="np04-wib-404" uri="ipbusudp-2.0://np04-wib-404:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b4/tx_mux_wib.xml" />
+  <connection id="np04-wib-405" uri="ipbusudp-2.0://np04-wib-405:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b4/tx_mux_wib.xml" />
+
+  <connection id="np04-wib-501" uri="ipbusudp-2.0://np04-wib-501:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b4/tx_mux_wib.xml" />
   <connection id="np04-wib-502" uri="ipbusudp-2.0://np04-wib-502:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b0/tx_mux_wib.xml" />
   <connection id="np04-wib-503" uri="ipbusudp-2.0://np04-wib-503:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b0/tx_mux_wib.xml" />
   <connection id="np04-wib-504" uri="ipbusudp-2.0://np04-wib-504:50001" address_table="file://${CRAPPYZCU_SHARE}/config/hermes_wib_v0.9.1_b0/tx_mux_wib.xml" />
