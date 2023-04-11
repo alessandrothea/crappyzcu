@@ -1,6 +1,6 @@
 
 CXXFLAGS = -g -O2 -Isrc -std=c++17
-LFLAGS = 
+LFLAGS = -lzmq
 
 # output binary for each of these (no headers)
 BSRC = $(wildcard src/*.cxx)
