@@ -12,8 +12,11 @@ using namespace std::chrono_literals;
 
 static constexpr uint16_t UDP_PORT = 50001;
 
-static constexpr uint32_t HEADER_LENGTH=0x1;
+static constexpr uint32_t HEADER_LENGTH = 0x1;
 static constexpr uint64_t AXI_ADDR_LENGTH = 0x10000;
+static constexpr std::chrono::milliseconds IPBIF_WAIT = 1ms;
+static constexpr std::chrono::seconds IPBIF_TIMEOUT = 1s;
+
 
 void print_ipbus_if_status(const std::vector<uint32_t>& status ) {
     std::ios_base::fmtflags f( std::cout.flags() );
@@ -156,6 +159,9 @@ int main(int argc, const char* argv[]) {
         // Poll status registers waiting for a reply
         try {
             while(true) {
+                ++wait_counts;
+                std::this_thread::sleep_for(IPBIF_WAIT);
+
                 auto status = mem.read_block(0,4);
 
                 if ( verbose ) {
@@ -167,11 +173,8 @@ int main(int argc, const char* argv[]) {
                     break;
                 }
 
-                if(std::chrono::steady_clock::now() - start > std::chrono::seconds(1)) 
+                if(std::chrono::steady_clock::now() - start > IPBIF_TIMEOUT) 
                     throw std::runtime_error("Timed out while waiting for ipbus interface response");
-
-                ++wait_counts;
-                std::this_thread::sleep_for(1ms);
 
             }
         } catch ( std::runtime_error &e ) {
