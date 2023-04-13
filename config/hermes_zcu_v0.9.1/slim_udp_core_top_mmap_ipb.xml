@@ -1,0 +1,3 @@
+<node id="TOP">
+    <node id="udp_core_control"     address="0x000"    module="file://udp_core_ctrl_mmap_ipb.xml"/>
+</node>

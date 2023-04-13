@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<node id="udp_core_settings" fwinfo="endpoint">
+
+    <!-- 14 ctrl reg with non zero rst values -->
+    <node id="nz_rst_ctrl" address="0x0"  fwinfo="endpoint;width=4">
+    
+        <node id="src_mac_addr_lower" address="0x0" description="Source MAC Address Lower"/>
+        <node id="src_mac_addr_upper" address="0x1">
+            <node id="upper" mask="0x0000FFFF" description="Source MAC Address Upper"/>
+        </node>
+        
+        <node id="dst_mac_addr_lower" address="0x2" description="Destination MAC Address Lower"/>
+        <node id="dst_mac_addr_upper" address="0x3">
+            <node id="upper" mask="0x0000FFFF" description="Destination MAC Address Upper"/>
+        </node>
+        
+        <node id="ethertype" address="0x4">
+            <node id="lower" mask="0x0000FFFF" description="Ethernet Packet Type"/>
+        </node>
+        
+        <node id="ipv4_header_0" address="0x5" description="IP v4 Header Fields 1">
+            <node id="ip_ver_hdr_len"   mask="0x000000FF" description="IP Version and Header Length"/>                      <!-- IP Version     = 4             -->
+            <node id="ip_service"       mask="0x0000FF00" description="IP Service (Type of Service/DiffService)"/>
+            <node id="ip_packet_length" mask="0xFFFF0000" description="IP Packet Length"/>                                  <!-- Packet Length  = 20            -->
+        </node>
+        
+        <node id="ipv4_header_1" address="0x6" description="IP v4 Header Fields 2">
+            <node id="ip_count"    mask="0x0000FFFF" description="IP Count (IP Identification)"/>                            <!-- IP Count       = 219           -->
+            <node id="ip_fragment" mask="0xFFFF0000" description="IP Fragment"/>
+        </node>
+        
+        <node id="ipv4_header_2" address="0x7" description="IP v4 Header Fields 3">
+            <node id="ip_ttl"          mask="0x000000FF" description="IP Time to Live"/>                                 <!-- TTL            = 128           -->
+            <node id="ip_protocol"     mask="0x0000FF00" description="IP Protocol"/>                                     <!-- IP Protocol    = 0x11 (UDP)    -->
+            <node id="header_checksum" mask="0xFFFF0000" description="IP Header Checksum"/>
+        </node>
+        
+        <node id="dst_ip_addr" address="0x8" description="UDP Destination IP Address"/>
+        <node id="src_ip_addr" address="0x9" description="UDP Source IP Address"/>
+        
+        <node id="udp_ports" address="0xa" description="UDP Ports">
+            <node id="src_port" mask="0x0000FFFF" description="UDP Source Port"/>
+            <node id="dst_port" mask="0xFFFF0000" description="UDP Destination Port"/>
+        </node>
+        
+        <node id="udp_length" address="0xb">
+            <node id="lower" mask="0x0000FFFF" description="UDP Length"/>
+        </node>
+        
+        <node id="filter_control" address="0xc" description="Controls the level of filtering in the UDP core Rx">
+            <node id="broadcast_en"        mask="0x00000001" description="Enables Broadcast Recieving"/>
+            <node id="arp_en"              mask="0x00000002" description="Enables ARPs"/>
+            <node id="ping_en"             mask="0x00000004" description="Enables Pings"/>
+            <node id="pass_uns_ethtype"    mask="0x00000100" description="Enable Passing of Unsupported Ethernet Packets"/>
+            <node id="pass_uns_ipv4"       mask="0x00000200" description="Enable Passing of Unsupported IPv4 Packets"/>
+            <node id="dst_mac_chk_en"      mask="0x00010000" description="Check Dest MAC address Field Of Incoming Packet"/>
+            <node id="src_mac_chk_en"      mask="0x00020000" description="Check Source MAC address Field Of Incoming Packet"/>
+            <node id="dst_ip_chk_en"       mask="0x00040000" description="Check Dest IP address Field Of Incoming Packet"/>
+            <node id="src_ip_chk_en"       mask="0x00080000" description="Check Source IP address Field Of Incoming Packet"/>
+            <node id="dst_port_chk_en"     mask="0x00100000" description="Check Dest UDP Port Field Of Incoming Packet"/>
+            <node id="src_port_chk_en"     mask="0x00200000" description="Check Source UDP Port Field Of Incoming Packet"/>
+            <node id="packet_count_rst_n"  mask="0x00400000" description="Reset Packet Counts"/>
+            <node id="strip_uns_pro"       mask="0x01000000" description="Remove The Header From Incoming Unsupported IPv4 Data"/>
+            <node id="strip_uns_eth"       mask="0x02000000" description="Remove The Header From Incoming Unsupported Ethernet Data"/>
+            <node id="chk_ip_length"       mask="0x04000000" description="Check Received Packets Total IP Length and Cut off Extra Padding"/>
+        </node>
+        
+        <node id="ifg" address="0xd">
+            <node id="lower" mask="0x0000FFFF" description="Used To Add Extra Delay Between Packets In Tx Path"/>
+        </node>
+        
+        <node id="control" address="0xe" description="UDP Core Control Register">
+            <node id="fixed_pkt_size"     mask="0x00000008" description="Use Fixed Packet Size In Tx For Outgoing Packets - Currently Unused"/>
+            <node id="udp_checksum_zero" mask="0x00000010" description="Set UDP Checksum to Zero - Currently Unused"/>
+            <node id="lut_mode"          mask="0x00000020" description="LUT Mode Enable - Use To Set Dst Addresses Of Outgoing UDP Packets From LUT"/>
+            <node id="tuser_dst_prt"     mask="0x00000040" description="Use Bits 15:0 of tuser for destination UDP port of outgoing packets"/>
+            <node id="tuser_src_prt"     mask="0x00000080" description="Use Bits 31:16 of tuser for source UDP port of outgoing packets"/>
+            <node id="reset_n"           mask="0x00008000" description="Soft Reset - Currently Unused"/>
+            <node id="udp_length"        mask="0xFFFF0000" description="UDP Length For Fixed Packet Length - Currently Unused"/>
+        </node>
+    </node>
+
+    <node id="rx_packet_counters" address="0x10"  fwinfo="endpoint;width=3">
+        <node id="udp_count"          address="0x0" description="Counter For Valid UDP Packets"/>
+        <node id="ping_count"         address="0x1" description="Counter For Valid Ping Packets"/>
+        <node id="arp_count"          address="0x2" description="Counter For Valid ARP Packets Detected In Filter"/>
+        <node id="uns_etype_count"    address="0x3" description="Counter Unsupported Etype Packets Detected In Filter"/>
+        <node id="uns_pro_count"      address="0x4" description="Counter Unsupported Protocol Packets Detected In Filter"/>
+        <node id="dropped_mac_count"  address="0x5" description="Counter For Dropped Mac Addr Packets Detected In Filter"/>
+        <node id="dropped_ip_count"   address="0x6" description="Counter For Dropped IP Addr Packets Detected In Filter"/>
+        <node id="dropped_port_count" address="0x7" description="Counter For Dropped Port Addr Packets Detected In Filter"/>
+    </node>
+    
+    <node id="tx_packet_counters" address="0x20"  fwinfo="endpoint;width=2">
+        <node id="udp_count"          address="0x0" description="Counter For Tx UDP Packets"/>
+        <node id="ping_count"         address="0x1" description="Counter For Tx Ping Packets"/>
+        <node id="arp_count"          address="0x2" description="Counter For Tx ARP Packets"/>
+    </node>
+
+    <node id="id_stat" address="0x30" fwinfo="endpoint;width=1">
+        <node id="ip_id"       address="0x0" description="IP ID"/> <!-- TODO: This Should be set by a Generic from the Top-Level IP_ID & X"0000" -->
+        <node id="udp_core_id" address="0x1" description="Value to Identify UDP Core"/>
+    </node>
+</node>

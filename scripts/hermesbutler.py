@@ -630,7 +630,8 @@ def stats(obj, sel_links, seconds, show_udp, show_buf):
         if show_udp:
             ctrl_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.nz_rst_ctrl'))
             ctrl_flt_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.nz_rst_ctrl.filter_control'))
-            stat_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.packet_counters'))
+            stat_rx_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.rx_packet_counters'))
+            stat_tx_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.tx_packet_counters'))
 
 
             ctrl_srcdst = {}
@@ -648,7 +649,8 @@ def stats(obj, sel_links, seconds, show_udp, show_buf):
                 # dict_to_table(ctrl_udp, title="udp ctrl", show_header=False),
                 dict_to_table(ctrl_srcdst, title="udp src/dst", show_header=False),
                 dict_to_table(ctrl_flt_udp, title="udp filter", show_header=False),
-                dict_to_table(stat_udp, title="udp stat", show_header=False),
+                dict_to_table(stat_rx_udp, title="udp rx stat", show_header=False),
+                dict_to_table(stat_tx_udp, title="udp tx stat", show_header=False),
             )
             print(grid)
 
