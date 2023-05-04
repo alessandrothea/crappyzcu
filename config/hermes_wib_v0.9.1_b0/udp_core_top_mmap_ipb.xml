@@ -1,5 +1,0 @@
-<node id="TOP">
-    <node id="udp_core_control"     address="0x000"    module="file://udp_core_ctrl_mmap_ipb.xml"/>
-    <node id="arp_mode_control"     address="0x200"    module="file://arp_mode_ctrl_mmap_ipb.xml"/>
-    <node id="farm_mode_lut"        address="0x400"    module="file://udp_core_farm_mode_luts_mmap_ipb.xml"/>
-</node>
