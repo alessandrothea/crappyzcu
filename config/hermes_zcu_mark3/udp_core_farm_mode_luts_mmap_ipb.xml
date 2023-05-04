@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-
-<node id="farm_mode_lut" fwinfo="endpoint">
-    <node id="lower_mac_addr"   address="0x0"   description="LUT Destination MAC Addr[31..0]" fwinfo="endpoint;width=8"/>
-    <node id="upper_mac_addr"   address="0x100" description="LUT Destination MAC Addr[47..32]" fwinfo="endpoint;width=8"/>
-    <node id="ip_addr"          address="0x200" description="LUT Destination IP Addr[31..0]" fwinfo="endpoint;width=8"/>
-    <node id="dst_port"         address="0x300" description="LUT Destination Port[15..0]" fwinfo="endpoint;width=8"/>
-</node>

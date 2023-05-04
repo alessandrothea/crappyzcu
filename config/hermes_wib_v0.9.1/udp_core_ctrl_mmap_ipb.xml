@@ -81,7 +81,7 @@
         </node>
     </node>
 
-    <node id="packet_counters" address="0x10"  fwinfo="endpoint;width=3">
+    <node id="rx_packet_counters" address="0x10"  fwinfo="endpoint;width=3">
         <node id="udp_count"          address="0x0" description="Counter For Valid UDP Packets"/>
         <node id="ping_count"         address="0x1" description="Counter For Valid Ping Packets"/>
         <node id="arp_count"          address="0x2" description="Counter For Valid ARP Packets Detected In Filter"/>
@@ -92,7 +92,13 @@
         <node id="dropped_port_count" address="0x7" description="Counter For Dropped Port Addr Packets Detected In Filter"/>
     </node>
     
-    <node id="id_stat" address="0x20" fwinfo="endpoint;width=1">
+    <node id="tx_packet_counters" address="0x20"  fwinfo="endpoint;width=2">
+        <node id="udp_count"          address="0x0" description="Counter For Tx UDP Packets"/>
+        <node id="ping_count"         address="0x1" description="Counter For Tx Ping Packets"/>
+        <node id="arp_count"          address="0x2" description="Counter For Tx ARP Packets"/>
+    </node>
+
+    <node id="id_stat" address="0x30" fwinfo="endpoint;width=1">
         <node id="ip_id"       address="0x0" description="IP ID"/> <!-- TODO: This Should be set by a Generic from the Top-Level IP_ID & X"0000" -->
         <node id="udp_core_id" address="0x1" description="Value to Identify UDP Core"/>
     </node>
