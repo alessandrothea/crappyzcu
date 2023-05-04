@@ -89,6 +89,9 @@ class HermesController :
 
     def get_node(self, id):
         return self.node.getNode(id)
+
+    def get_nodes(self, regex):
+        return self.node.getNodes(regex)
     
     def dispatch(self):
         self.node.getClient().dispatch()
@@ -449,7 +452,7 @@ def udp_config(obj, src_id, dst_id, link):
     # Their IP address = 10.73.139.23
     # print(f"Their ip address: {socket.inet_ntoa(dst['ip'].to_bytes(4, 'big'))}")
     dst_u32 = int.from_bytes(socket.inet_aton(dst['ip']),"big")
-    print(f"Their ip address: {src['ip']} (0x{dst_u32:08x})")
+    print(f"Their ip address: {dst['ip']} (0x{dst_u32:08x})")
     hrms.get_node(f'{udp_core_ctrl}.dst_ip_addr').write(dst_u32) 
     
     # Our MAC address
@@ -630,8 +633,14 @@ def stats(obj, sel_links, seconds, show_udp, show_buf):
         if show_udp:
             ctrl_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.nz_rst_ctrl'))
             ctrl_flt_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.nz_rst_ctrl.filter_control'))
-            stat_rx_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.rx_packet_counters'))
-            stat_tx_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.tx_packet_counters'))
+            if hrms.get_nodes('udp.udp_core_{i}.udp_core_control.rx_packet_counters'):
+                print("New tx counters found")
+                stat_rx_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.rx_packet_counters'))
+                stat_tx_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.tx_packet_counters'))
+            else:
+                print("No new tx counters found")
+                stat_rx_udp = dump_sub_regs(hrms.get_node(f'udp.udp_core_{i}.udp_core_control.packet_counters'))
+                stat_tx_udp = {'-':0}
 
 
             ctrl_srcdst = {}

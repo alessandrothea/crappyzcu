@@ -1,4 +1,6 @@
 tx_endpoints = {
+
+    
     'np04-zcu-001:priv': {
         'mac': 0x000a3504b5f7,
         'ip': '192.168.2.2',
@@ -10,7 +12,7 @@ tx_endpoints = {
         'port': 0x4444,
     },
 
-    ### APA3
+    ### APA4
     ### WIB 401
     'np04-wib-401-d0': {
         'mac': 0x80d336005240,
@@ -23,7 +25,7 @@ tx_endpoints = {
         'port': 0x4444,
     },
     
-    ### WIB 302
+    ### WIB 402
     'np04-wib-402-d0': {
         'mac': 0x80d336005242,
         'ip': '10.73.139.50',
@@ -73,7 +75,7 @@ tx_endpoints = {
     },
 
 
- ### APA3
+    ### APA3
     ### WIB 301
     'np04-wib-301-d0': {
         'mac': 0x80d336005230,
